@@ -1,0 +1,176 @@
+{
+  "nav": {
+    "technology": "Tecnología",
+    "gallery": "Galería",
+    "applications": "Aplicaciones",
+    "contact": "Contacto"
+  },
+  "hero": {
+    "brandName": "BLNK",
+    "decodeText": "Construye la pared imposible.",
+    "subtitle": "Paneles LED modulares. Montaje sin herramientas. Brillo cinematográfico.",
+    "ctaPrimary": "Solicitar Cotización",
+    "ctaSecondary": "Ver Galería",
+    "cornerLabel": "SISTEMA BLNK display",
+    "cornerDetail": "Alquiler • Instalación • Global",
+    "scroll": "Desplazar",
+    "systemLabel": "SISTEMA BLNK display"
+  },
+  "technology": {
+    "sectionLabel": "QUÉ ES",
+    "headline": "Un lienzo LED\nmodular",
+    "description": "BLNK es un sistema de displays de grado rental construido para escenarios, retail y espacios inmersivos. Conecta los paneles. Sin herramientas. Sin complicaciones.",
+    "featureNumber": "01",
+    "featureTitle": "Montaje sin Herramientas",
+    "featureDesc": "Sistema de conexión snap-lock",
+    "techLabel": "Tec",
+    "scrollHint": "Desplaza para explorar la tecnología",
+    "albums": [
+      { "title": "FLEXIBLE", "subtitle": "CURVA" },
+      { "title": "MODULAR", "subtitle": "CONSTRUYE" },
+      { "title": "SEAMLESS", "subtitle": "CONECTA" },
+      { "title": "INMERSIVO", "subtitle": "EXPERIENCIA" }
+    ]
+  },
+  "gallery": {
+    "sectionLabel": "MODO SUPERFICIE",
+    "sectionTitle": "Convierte la pared en una ventana.",
+    "galleryLabel": "GALERÍA DE PROYECTOS",
+    "galleryTitle": "Construido para cualquier escenario.",
+    "marqueeTexts": [
+      "EVENTOS EN VIVO",
+      "CORPORATIVO",
+      "ACTIVACIONES DE MARCA",
+      "ARQUITECTURA",
+      "CONCIERTOS",
+      "EXHIBICIONES",
+      "INMERSIVO",
+      "FESTIVALES"
+    ],
+    "endCtaText": "Ver Todos los Proyectos",
+    "imageAlts": {
+      "festivalStage": "Escenario de festival de música",
+      "tradeShow": "Stand de feria comercial",
+      "brandActivation": "Activación de marca",
+      "outdoorConcert": "Concierto al aire libre",
+      "corporate": "Conferencia corporativa",
+      "artInstallation": "Instalación de arte"
+    },
+    "galleryImages": [
+      { "title": "Eventos en Vivo", "date": "Producción de Conciertos y Festivales" },
+      { "title": "Espacios Retail", "date": "Centros de Experiencia de Marca" },
+      { "title": "Arquitectura", "date": "Instalaciones Permanentes" },
+      { "title": "Diseño de Escenario", "date": "Producción de Gira y Venue" },
+      { "title": "Festivales", "date": "Eventos a Gran Escala" },
+      { "title": "Inmersivo", "date": "Experiencias Interactivas" }
+    ]
+  },
+  "applications": {
+    "sectionLabel": "APLICACIONES",
+    "sectionTitle": "Donde BLNK cobra vida.",
+    "buyButtonText": "Saber Más",
+    "detailsButtonText": "Ver Especificaciones",
+    "bottomNote": "Soluciones personalizadas para cualquier tamaño de venue",
+    "bottomCtaText": "Obtener Cotización Personalizada",
+    "statusLabels": {
+      "onSale": "Disponible",
+      "soldOut": "Reservado",
+      "comingSoon": "Próximamente",
+      "default": "Consultar"
+    },
+    "tourDates": [
+      {
+        "date": "2026.03.15",
+        "time": "EN VIVO",
+        "city": "Giras de Conciertos",
+        "venue": "Producción de Arena y Estadio"
+      },
+      {
+        "date": "2026.04.01",
+        "time": "EVENTO",
+        "city": "Eventos Corporativos",
+        "venue": "Conferencias y Lanzamientos de Producto"
+      },
+      {
+        "date": "2026.05.20",
+        "time": "FERIA",
+        "city": "Exhibiciones",
+        "venue": "Ferias Comerciales y Stands de Expo"
+      },
+      {
+        "date": "2026.06.10",
+        "time": "MARCA",
+        "city": "Activaciones de Marca",
+        "venue": "Experiencias Pop-up y Campañas"
+      }
+    ]
+  },
+  "specs": {
+    "sectionLabel": "ESPECIFICACIONES",
+    "headline": "Especificaciones que\nsobreviven al show.",
+    "description": "Construido para desmontar, viajar y reinstalar. Calibrado de fábrica. Cada panel es probado para rendir bajo presión.",
+    "specs": [
+      { "label": "Pitch", "value": "2.9mm / 3.9mm", "desc": "Opciones de densidad de píxeles" },
+      { "label": "Brillo", "value": "4500 nits", "desc": "Visible al aire libre" },
+      { "label": "Refresco", "value": "7680Hz", "desc": "Amigable con cámaras" },
+      { "label": "Curvatura", "value": "±10°", "desc": "Flexibilidad por panel" },
+      { "label": "Peso", "value": "8.2 kg", "desc": "Por panel" },
+      { "label": "Montaje", "value": "Sin herramientas", "desc": "Ensamblaje rápido" }
+    ],
+    "contactSectionLabel": "CONTACTO",
+    "contactHeadline": "¿Listo para construir\ntu pared?",
+    "contactDescription": "Cuéntanos la fecha, el lugar y el tamaño. Te responderemos con un plan y una cotización dentro de 24 horas.",
+    "form": {
+      "name": "Nombre",
+      "namePlaceholder": "Tu nombre",
+      "email": "Correo",
+      "emailPlaceholder": "tu@correo.com",
+      "eventDate": "Fecha del Evento",
+      "venueCity": "Ciudad del Venue",
+      "venuePlaceholder": "Ciudad, Provincia",
+      "message": "Mensaje",
+      "messagePlaceholder": "Cuéntanos sobre tu proyecto...",
+      "submit": "Solicitar Cotización",
+      "successTitle": "¡Mensaje Enviado!",
+      "successMessage": "Te responderemos dentro de 24 horas."
+    },
+    "contactLabels": {
+      "email": "Correo",
+      "phone": "Teléfono",
+      "address": "Dirección"
+    }
+  },
+  "footer": {
+    "heroTitle": "¿Listo para construir tu pared?",
+    "heroSubtitle": "Cuéntanos la fecha, el lugar y el tamaño. Te responderemos con un plan y una cotización.",
+    "artistLabel": "TECNOLOGÍA",
+    "artistName": "BLNK display",
+    "artistSubtitle": "Sistemas LED Modulares",
+    "brandDescription": "Soluciones avanzadas de visualización para conciertos, eventos, exhibiciones y experiencias de marca inmersivas. Construido para desmontar, viajar y reinstalar.",
+    "quickLinksTitle": "Enlaces Rápidos",
+    "quickLinks": ["Tecnología", "Galería", "Aplicaciones", "Especificaciones", "Contacto"],
+    "contactTitle": "Contacto",
+    "emailLabel": "Correo",
+    "phoneLabel": "Teléfono",
+    "addressLabel": "Dirección",
+    "newsletterTitle": "Mantente Actualizado",
+    "newsletterDescription": "Recibe lo último en nuevos productos y proyectos destacados.",
+    "newsletterButtonText": "Suscribirse",
+    "subscribeAlertMessage": "¡Gracias por suscribirte!",
+    "copyrightText": "© 2026 BLNK display. Todos los derechos reservados.",
+    "bottomLinks": ["Política de Privacidad", "Términos de Servicio", "Carreras"],
+    "socialLinks": [
+      { "label": "Instagram", "href": "#" },
+      { "label": "Twitter", "href": "#" },
+      { "label": "YouTube", "href": "#" },
+      { "label": "LinkedIn", "href": "#" }
+    ],
+    "galleryTitle": "Galería",
+    "emailPlaceholder": "tu@correo.com"
+  },
+  "language": {
+    "toggle": "EN / ES",
+    "en": "English",
+    "es": "Español"
+  }
+}

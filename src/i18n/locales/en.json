@@ -1,0 +1,176 @@
+{
+  "nav": {
+    "technology": "Technology",
+    "gallery": "Gallery",
+    "applications": "Applications",
+    "contact": "Contact"
+  },
+  "hero": {
+    "brandName": "BLNK",
+    "decodeText": "Build the impossible wall.",
+    "subtitle": "Modular LED panels. Tool-free assembly. Cinematic brightness.",
+    "ctaPrimary": "Request a Quote",
+    "ctaSecondary": "See Showcase",
+    "cornerLabel": "BLNK display SYSTEM",
+    "cornerDetail": "Rental • Install • Global",
+    "scroll": "Scroll",
+    "systemLabel": "BLNK display SYSTEM"
+  },
+  "technology": {
+    "sectionLabel": "WHAT IT IS",
+    "headline": "A modular LED\ncanvas",
+    "description": "BLNK is a rental-grade display system built for stages, retail, and immersive spaces. Snap panels together. No tools. No guesswork.",
+    "featureNumber": "01",
+    "featureTitle": "Tool-Free Assembly",
+    "featureDesc": "Snap-lock connection system",
+    "techLabel": "Tech",
+    "scrollHint": "Scroll to explore technology",
+    "albums": [
+      { "title": "FLEXIBLE", "subtitle": "CURVE" },
+      { "title": "MODULAR", "subtitle": "BUILD" },
+      { "title": "SEAMLESS", "subtitle": "CONNECT" },
+      { "title": "IMMERSIVE", "subtitle": "EXPERIENCE" }
+    ]
+  },
+  "gallery": {
+    "sectionLabel": "SURFACE MODE",
+    "sectionTitle": "Turn the wall into a window.",
+    "galleryLabel": "PROJECT GALLERY",
+    "galleryTitle": "Built for any stage.",
+    "marqueeTexts": [
+      "LIVE EVENTS",
+      "CORPORATE",
+      "BRAND ACTIVATIONS",
+      "ARCHITECTURE",
+      "CONCERTS",
+      "EXHIBITIONS",
+      "IMMERSIVE",
+      "FESTIVALS"
+    ],
+    "endCtaText": "View All Projects",
+    "imageAlts": {
+      "festivalStage": "Music festival stage",
+      "tradeShow": "Trade show booth",
+      "brandActivation": "Brand activation",
+      "outdoorConcert": "Outdoor concert",
+      "corporate": "Corporate conference",
+      "artInstallation": "Art installation"
+    },
+    "galleryImages": [
+      { "title": "Live Events", "date": "Concert & Festival Production" },
+      { "title": "Retail Spaces", "date": "Brand Experience Centers" },
+      { "title": "Architecture", "date": "Permanent Installations" },
+      { "title": "Stage Design", "date": "Tour & Venue Production" },
+      { "title": "Festivals", "date": "Large Scale Events" },
+      { "title": "Immersive", "date": "Interactive Experiences" }
+    ]
+  },
+  "applications": {
+    "sectionLabel": "APPLICATIONS",
+    "sectionTitle": "Where BLNK comes alive.",
+    "buyButtonText": "Learn More",
+    "detailsButtonText": "View Specs",
+    "bottomNote": "Custom solutions for any venue size",
+    "bottomCtaText": "Get a Custom Quote",
+    "statusLabels": {
+      "onSale": "Available",
+      "soldOut": "Booked",
+      "comingSoon": "Coming Soon",
+      "default": "Inquire"
+    },
+    "tourDates": [
+      {
+        "date": "2026.03.15",
+        "time": "LIVE",
+        "city": "Concert Tours",
+        "venue": "Arena & Stadium Production"
+      },
+      {
+        "date": "2026.04.01",
+        "time": "EVENT",
+        "city": "Corporate Events",
+        "venue": "Conferences & Product Launches"
+      },
+      {
+        "date": "2026.05.20",
+        "time": "TRADE",
+        "city": "Exhibitions",
+        "venue": "Trade Shows & Expo Booths"
+      },
+      {
+        "date": "2026.06.10",
+        "time": "BRAND",
+        "city": "Brand Activations",
+        "venue": "Pop-up Experiences & Campaigns"
+      }
+    ]
+  },
+  "specs": {
+    "sectionLabel": "SPECIFICATIONS",
+    "headline": "Specs that survive\nthe show.",
+    "description": "Built for teardown, travel, and reinstall. Calibrated out of the box. Every panel is tested to perform under pressure.",
+    "specs": [
+      { "label": "Pitch", "value": "2.9mm / 3.9mm", "desc": "Pixel density options" },
+      { "label": "Brightness", "value": "4500 nits", "desc": "Outdoor visible" },
+      { "label": "Refresh", "value": "7680Hz", "desc": "Camera-friendly" },
+      { "label": "Curving", "value": "±10°", "desc": "Per panel flexibility" },
+      { "label": "Weight", "value": "8.2 kg", "desc": "Per panel" },
+      { "label": "Setup", "value": "Tool-free", "desc": "Quick assembly" }
+    ],
+    "contactSectionLabel": "GET IN TOUCH",
+    "contactHeadline": "Ready to build\nyour wall?",
+    "contactDescription": "Tell us the date, venue, and size. We'll reply with a plan and a quote within 24 hours.",
+    "form": {
+      "name": "Name",
+      "namePlaceholder": "Your name",
+      "email": "Email",
+      "emailPlaceholder": "your@email.com",
+      "eventDate": "Event Date",
+      "venueCity": "Venue City",
+      "venuePlaceholder": "City, State",
+      "message": "Message",
+      "messagePlaceholder": "Tell us about your project...",
+      "submit": "Request a Quote",
+      "successTitle": "Message Sent!",
+      "successMessage": "We'll get back to you within 24 hours."
+    },
+    "contactLabels": {
+      "email": "Email",
+      "phone": "Phone",
+      "address": "Address"
+    }
+  },
+  "footer": {
+    "heroTitle": "Ready to build your wall?",
+    "heroSubtitle": "Tell us the date, venue, and size. We'll reply with a plan and a quote.",
+    "artistLabel": "TECHNOLOGY",
+    "artistName": "BLNK display",
+    "artistSubtitle": "Modular LED Systems",
+    "brandDescription": "Advanced visual display solutions for concerts, events, exhibitions, and immersive brand experiences. Built for teardown, travel, and reinstall.",
+    "quickLinksTitle": "Quick Links",
+    "quickLinks": ["Technology", "Gallery", "Applications", "Specs", "Contact"],
+    "contactTitle": "Contact",
+    "emailLabel": "Email",
+    "phoneLabel": "Phone",
+    "addressLabel": "Address",
+    "newsletterTitle": "Stay Updated",
+    "newsletterDescription": "Get the latest on new products and project showcases.",
+    "newsletterButtonText": "Subscribe",
+    "subscribeAlertMessage": "Thanks for subscribing!",
+    "copyrightText": "© 2026 BLNK display. All rights reserved.",
+    "bottomLinks": ["Privacy Policy", "Terms of Service", "Careers"],
+    "socialLinks": [
+      { "label": "Instagram", "href": "#" },
+      { "label": "Twitter", "href": "#" },
+      { "label": "YouTube", "href": "#" },
+      { "label": "LinkedIn", "href": "#" }
+    ],
+    "galleryTitle": "Gallery",
+    "emailPlaceholder": "your@email.com"
+  },
+  "language": {
+    "toggle": "EN / ES",
+    "en": "English",
+    "es": "Español"
+  }
+}

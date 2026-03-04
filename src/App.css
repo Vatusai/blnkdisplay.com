@@ -1,0 +1,110 @@
+/* BLNK display - App Styles */
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+  background: #07070A;
+}
+
+/* Smooth section transitions */
+.section-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+/* Pinned section base */
+.pinned-section {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Flowing section base */
+.flowing-section {
+  width: 100%;
+  position: relative;
+}
+
+/* Hero specific */
+.hero-section {
+  z-index: 10;
+}
+
+/* Technology section */
+.technology-section {
+  z-index: 20;
+}
+
+/* Gallery section */
+.gallery-section {
+  z-index: 30;
+}
+
+/* Applications section */
+.applications-section {
+  z-index: 40;
+}
+
+/* Stage moment section */
+.stage-section {
+  z-index: 50;
+}
+
+/* Specs section */
+.specs-section {
+  z-index: 60;
+}
+
+/* Contact/Footer section */
+.contact-section {
+  z-index: 70;
+}
+
+/* Ensure proper stacking */
+.section-wrapper + .section-wrapper {
+  margin-top: 0;
+}
+
+/* Loading state */
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  background: #07070A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+
+.loading-spinner {
+  width: 48px;
+  height: 48px;
+  border: 2px solid rgba(0, 240, 255, 0.2);
+  border-top-color: #00F0FF;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .glint-line {
+    animation: none;
+  }
+  
+  .animate-marquee {
+    animation: none;
+  }
+  
+  .animate-spin-slow {
+    animation: none;
+  }
+}
