@@ -4,12 +4,15 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowDown } from 'lucide-react';
 import { heroConfig, heroConfigEs } from '../config';
 import { useLang } from '../LangContext';
+import { useIsMobile } from '../hooks/useIsMobile';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const Hero = () => {
   const lang = useLang();
   const c = lang === 'es' ? heroConfigEs : heroConfig;
+  const isMobile = useIsMobile();
+  const bgImage = isMobile && c.backgroundImageMobile ? c.backgroundImageMobile : c.backgroundImage;
   const sectionRef = useRef<HTMLElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
@@ -132,9 +135,10 @@ const Hero = () => {
               top: `${(row / rows) * 100}%`,
               width: `${100 / cols}%`,
               height: `${100 / rows}%`,
-              backgroundImage: isPink ? 'none' : c.backgroundImage ? `url(${c.backgroundImage})` : 'none',
+              backgroundImage: isPink ? 'none' : bgImage ? `url(${bgImage})` : 'none',
               backgroundPosition: `${(col / (cols - 1)) * 100}% ${(row / (rows - 1)) * 100}%`,
               backgroundSize: `${cols * 100}% ${rows * 100}%`,
+              backgroundRepeat: 'no-repeat',
               transformOrigin: 'center center',
             }}
             data-cursor-hover

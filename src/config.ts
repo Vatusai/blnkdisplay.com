@@ -45,6 +45,7 @@ export interface HeroConfig {
   ctaText: string;
   ctaHref: string;
   backgroundImage: string;
+  backgroundImageMobile?: string;
   gridRows: number;
   gridCols: number;
   pinkCells: { row: number; col: number }[];
@@ -57,6 +58,7 @@ export const heroConfig: HeroConfig = {
   ctaText: "Explore the system",
   ctaHref: "#products",
   backgroundImage: "/images/hero_stage_blnk.jpg",
+  backgroundImageMobile: "/images/hero_mobile.webp",
   gridRows: 6,
   gridCols: 8,
   pinkCells: [

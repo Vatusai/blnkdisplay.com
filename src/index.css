@@ -55,6 +55,16 @@
     text-transform: uppercase;
     letter-spacing: -0.02em;
   }
+  
+  /* Global responsive image defaults */
+  img, video {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  img:not([class*="object-"]), video:not([class*="object-"]) {
+    object-fit: cover;
+  }
 }
 
 @layer utilities {

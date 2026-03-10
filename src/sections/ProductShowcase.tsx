@@ -181,7 +181,7 @@ const ProductShowcase = () => {
                 <img
                   src={c.productImage}
                   alt={c.productImageAlt}
-                  className="w-64 md:w-80 lg:w-96 h-auto drop-shadow-2xl"
+                  className="w-64 md:w-80 lg:w-96 h-auto object-contain drop-shadow-2xl"
                 />
               )}
 

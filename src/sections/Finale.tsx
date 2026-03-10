@@ -196,7 +196,7 @@ const Finale = () => {
 
         {/* Image - 40% */}
         {c.image && (
-          <div className="lg:col-span-2 relative overflow-hidden">
+          <div className="lg:col-span-2 relative overflow-hidden aspect-[3/4] lg:aspect-auto">
             <div
               ref={imageRef}
               className="absolute inset-0"
