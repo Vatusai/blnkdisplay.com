@@ -28,11 +28,18 @@ const Navigation = () => {
       >
         <div className="w-full px-6 lg:px-12 flex items-center justify-between">
           {/* Logo */}
-          <a
-            href="#"
-            className="font-display font-black text-xl tracking-tight text-white hover:text-pink transition-colors duration-300"
-          >
-            {navigationConfig.logo}<span className="text-pink">{navigationConfig.logoAccent}</span>
+          <a href="#" className="flex items-center" data-cursor-hover>
+            {navigationConfig.logoImage ? (
+              <img
+                src={navigationConfig.logoImage}
+                alt={navigationConfig.logo}
+                className="h-10 w-auto object-contain"
+              />
+            ) : (
+              <span className="font-display font-black text-xl tracking-tight text-white hover:text-pink transition-colors duration-300">
+                {navigationConfig.logo}<span className="text-pink">{navigationConfig.logoAccent}</span>
+              </span>
+            )}
           </a>
 
           {/* Desktop Navigation */}

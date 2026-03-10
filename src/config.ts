@@ -16,6 +16,7 @@ export interface NavLink {
 export interface NavigationConfig {
   logo: string;
   logoAccent: string;
+  logoImage: string;
   navLinks: NavLink[];
   ctaText: string;
 }
@@ -23,6 +24,7 @@ export interface NavigationConfig {
 export const navigationConfig: NavigationConfig = {
   logo: "BLNK",
   logoAccent: "",
+  logoImage: "/images/logo_white.png",
   navLinks: [
     { label: "Products", href: "#products" },
     { label: "Projects", href: "#projects" },
@@ -54,7 +56,7 @@ export const heroConfig: HeroConfig = {
   subtitle: "BLNK DISPLAY SYSTEM",
   ctaText: "Explore the system",
   ctaHref: "#products",
-  backgroundImage: "/images/hero_concert_led.jpg",
+  backgroundImage: "/images/hero_stage_blnk.jpg",
   gridRows: 6,
   gridCols: 8,
   pinkCells: [
@@ -105,7 +107,7 @@ export const productShowcaseConfig: ProductShowcaseConfig = {
   colorSwatches: ["#FF2D8F", "#00D4FF", "#FFFFFF"],
   colorSwatchesLabel: "Available configurations",
   ctaText: "See specs",
-  productImage: "/images/product_panel_detail.jpg",
+  productImage: "/images/product_led_cube.jpg",
   productImageAlt: "BLNK LED Panel Detail",
   decorativeText: "PRECISION",
 };
@@ -169,7 +171,7 @@ export const finaleConfig: FinaleConfig = {
   features: ["Rapid Deployment", "Tool-Free Rigging", "24/7 Support"],
   ctaText: "Explore layouts",
   ctaHref: "#contact",
-  image: "/images/modular_stack_rigging.jpg",
+  image: "/images/finale_branded_wall.jpg",
   imageAlt: "Modular LED System",
   decorativeText: "BUILD",
 };
@@ -200,22 +202,27 @@ export const applicationsConfig: ApplicationsConfig = {
     {
       title: "Concerts & Live Shows",
       description: "Stunning visuals that amplify every performance",
-      image: "/images/hero_concert_led.jpg",
+      image: "/images/app_concerts.jpg",
     },
     {
       title: "Corporate Events",
       description: "Professional displays for presentations and launches",
-      image: "/images/curved_stage_install.jpg",
+      image: "/images/app_corporate.jpg",
     },
     {
       title: "Brand Activations",
       description: "Immersive experiences that captivate audiences",
-      image: "/images/immersive_room_experience.jpg",
+      image: "/images/app_brand_activation.jpg",
     },
     {
-      title: "Outdoor & Touring",
-      description: "Weather-rated systems for festivals and tours",
-      image: "/images/outdoor_tour_truck.jpg",
+      title: "Outdoor & Public Spaces",
+      description: "Large-scale displays for stadiums, malls, and public venues",
+      image: "/images/app_outdoor.jpg",
+    },
+    {
+      title: "Exhibitions & Trade Shows",
+      description: "Curved and cylindrical LED structures that stop the floor",
+      image: "/images/app_exhibition.jpg",
     },
   ],
 };
@@ -343,6 +350,7 @@ export interface LegalLink {
 export interface FooterConfig {
   logo: string;
   logoAccent: string;
+  logoImage: string;
   brandDescription: string;
   socialLinks: SocialLink[];
   linkSections: FooterLinkSection[];
@@ -355,6 +363,7 @@ export interface FooterConfig {
 export const footerConfig: FooterConfig = {
   logo: "BLNK",
   logoAccent: "",
+  logoImage: "/images/logo_white.png",
   brandDescription: "Flexible LED displays that transform spaces. Advanced visual solutions for concerts, events, and immersive brand experiences.",
   socialLinks: [
     { platform: "instagram", href: "#", label: "Instagram" },
@@ -393,4 +402,26 @@ export const siteConfig: SiteConfig = {
   title: "BLNK Display | Flexible LED Display Rentals",
   description: "Advanced visual display solutions for concerts, events, exhibitions, and immersive brand experiences. Flexible LED displays that transform spaces.",
   language: "en",
+};
+
+// ----------------------------------------------------------------------------
+// Video Section
+// ----------------------------------------------------------------------------
+
+export interface VideoConfig {
+  sectionLabel: string;
+  headingMain: string;
+  headingAccent: string;
+  description: string;
+  videoSrc: string;
+  posterImage: string;
+}
+
+export const videoConfig: VideoConfig = {
+  sectionLabel: "IN ACTION",
+  headingMain: "See it",
+  headingAccent: "run.",
+  description: "From flat walls to curved cylinders — BLNK Display systems deployed across events, retail, and exhibitions.",
+  videoSrc: "/video/demo_reel.mp4",
+  posterImage: "/images/hero_stage_blnk.jpg",
 };

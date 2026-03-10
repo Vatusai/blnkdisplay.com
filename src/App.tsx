@@ -5,6 +5,7 @@ import Hero from './sections/Hero';
 import ProductShowcase from './sections/ProductShowcase';
 import ColorPalette from './sections/ColorPalette';
 import Finale from './sections/Finale';
+import VideoShowcase from './sections/VideoShowcase';
 import Applications from './sections/Applications';
 import Specs from './sections/Specs';
 import Workflow from './sections/Workflow';
@@ -84,6 +85,7 @@ function App() {
         <ProductShowcase />
         <ColorPalette />
         <Finale />
+        <VideoShowcase />
         <Applications />
         <Specs />
         <Workflow />

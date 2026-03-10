@@ -19,11 +19,18 @@ const Footer = () => {
         <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-8">
           {/* Brand section */}
           <div className="lg:col-span-2">
-            <a
-              href="#"
-              className="font-display font-black text-4xl text-white hover:text-pink transition-colors duration-300 inline-block mb-6"
-            >
-              {footerConfig.logo}<span className="text-pink">{footerConfig.logoAccent}</span>
+            <a href="#" className="inline-block mb-6" data-cursor-hover>
+              {footerConfig.logoImage ? (
+                <img
+                  src={footerConfig.logoImage}
+                  alt={footerConfig.logo}
+                  className="h-14 w-auto object-contain"
+                />
+              ) : (
+                <span className="font-display font-black text-4xl text-white hover:text-pink transition-colors duration-300">
+                  {footerConfig.logo}<span className="text-pink">{footerConfig.logoAccent}</span>
+                </span>
+              )}
             </a>
             {footerConfig.brandDescription && (
               <p className="font-body text-white/50 text-sm leading-relaxed mb-8 max-w-sm">
