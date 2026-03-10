@@ -1,11 +1,14 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { workflowConfig } from '../config';
+import { workflowConfig, workflowConfigEs } from '../config';
+import { useLang } from '../LangContext';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const Workflow = () => {
+  const lang = useLang();
+  const c = lang === 'es' ? workflowConfigEs : workflowConfig;
   const sectionRef = useRef<HTMLElement>(null);
   const headingRef = useRef<HTMLDivElement>(null);
   const stepsRef = useRef<HTMLDivElement>(null);
@@ -77,7 +80,7 @@ const Workflow = () => {
     };
   }, []);
 
-  if (!workflowConfig.steps.length) return null;
+  if (!c.steps.length) return null;
 
   return (
     <section
@@ -94,16 +97,16 @@ const Workflow = () => {
         {/* Section header */}
         <div ref={headingRef} className="mb-16 md:mb-24">
           <span className="block font-body text-xs uppercase tracking-[0.3em] text-pink mb-4">
-            {workflowConfig.sectionLabel}
+            {c.sectionLabel}
           </span>
           <h2 className="font-display font-black text-3xl md:text-5xl lg:text-6xl text-white leading-[0.95] tracking-tight">
-            {workflowConfig.headingMain}
+            {c.headingMain}
           </h2>
         </div>
 
         {/* Steps */}
         <div ref={stepsRef} className="space-y-6">
-          {workflowConfig.steps.map((step, index) => (
+          {c.steps.map((step, index) => (
             <div
               key={index}
               className="workflow-step group relative bg-white p-8 md:p-12 transition-all duration-300 hover:translate-x-2"

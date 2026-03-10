@@ -2,11 +2,14 @@ import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Play, Pause, Volume2, VolumeX } from 'lucide-react';
-import { videoConfig } from '../config';
+import { videoConfig, videoConfigEs } from '../config';
+import { useLang } from '../LangContext';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const VideoShowcase = () => {
+  const lang = useLang();
+  const c = lang === 'es' ? videoConfigEs : videoConfig;
   const sectionRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const headingRef = useRef<HTMLDivElement>(null);
@@ -103,14 +106,14 @@ const VideoShowcase = () => {
         {/* Heading */}
         <div ref={headingRef} className="mb-12">
           <span className="reveal-text block font-body text-xs uppercase tracking-[0.3em] text-pink mb-4">
-            {videoConfig.sectionLabel}
+            {c.sectionLabel}
           </span>
           <h2 className="reveal-text font-display font-black text-4xl md:text-6xl lg:text-7xl text-white leading-[0.95] tracking-tight">
-            {videoConfig.headingMain}{' '}
-            <span className="text-stroke">{videoConfig.headingAccent}</span>
+            {c.headingMain}{' '}
+            <span className="text-stroke">{c.headingAccent}</span>
           </h2>
           <p className="reveal-text font-body text-white/50 text-base md:text-lg mt-6 max-w-xl leading-relaxed">
-            {videoConfig.description}
+            {c.description}
           </p>
         </div>
 
@@ -118,8 +121,8 @@ const VideoShowcase = () => {
         <div className="relative group border border-white/10 overflow-hidden">
           <video
             ref={videoRef}
-            src={videoConfig.videoSrc}
-            poster={videoConfig.posterImage}
+            src={c.videoSrc}
+            poster={c.posterImage}
             muted
             playsInline
             loop
@@ -151,7 +154,7 @@ const VideoShowcase = () => {
             >
               {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
               <span className="font-body text-xs uppercase tracking-wider">
-                {isPlaying ? 'Pause' : 'Play'}
+                {isPlaying ? c.pauseLabel : c.playLabel}
               </span>
             </button>
 
@@ -162,7 +165,7 @@ const VideoShowcase = () => {
             >
               {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
               <span className="font-body text-xs uppercase tracking-wider">
-                {isMuted ? 'Unmute' : 'Mute'}
+                {isMuted ? c.unmuteLabel : c.muteLabel}
               </span>
             </button>
           </div>

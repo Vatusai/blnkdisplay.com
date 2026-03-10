@@ -1,5 +1,6 @@
 import { Instagram, Twitter, Youtube, Mail, MapPin, Phone } from 'lucide-react';
-import { footerConfig } from '../config';
+import { footerConfig, footerConfigEs } from '../config';
+import { useLang } from '../LangContext';
 
 const socialIconMap = {
   instagram: Instagram,
@@ -8,9 +9,11 @@ const socialIconMap = {
 };
 
 const Footer = () => {
+  const lang = useLang();
+  const c = lang === 'es' ? footerConfigEs : footerConfig;
   const currentYear = new Date().getFullYear();
 
-  if (!footerConfig.logo) return null;
+  if (!c.logo) return null;
 
   return (
     <footer className="relative w-full bg-black border-t border-white/10">
@@ -20,28 +23,28 @@ const Footer = () => {
           {/* Brand section */}
           <div className="lg:col-span-2">
             <a href="#" className="inline-block mb-6" data-cursor-hover>
-              {footerConfig.logoImage ? (
+              {c.logoImage ? (
                 <img
-                  src={footerConfig.logoImage}
-                  alt={footerConfig.logo}
+                  src={c.logoImage}
+                  alt={c.logo}
                   className="h-14 w-auto object-contain"
                 />
               ) : (
                 <span className="font-display font-black text-4xl text-white hover:text-pink transition-colors duration-300">
-                  {footerConfig.logo}<span className="text-pink">{footerConfig.logoAccent}</span>
+                  {c.logo}<span className="text-pink">{c.logoAccent}</span>
                 </span>
               )}
             </a>
-            {footerConfig.brandDescription && (
+            {c.brandDescription && (
               <p className="font-body text-white/50 text-sm leading-relaxed mb-8 max-w-sm">
-                {footerConfig.brandDescription}
+                {c.brandDescription}
               </p>
             )}
 
             {/* Social links */}
-            {footerConfig.socialLinks.length > 0 && (
+            {c.socialLinks.length > 0 && (
               <div className="flex gap-4">
-                {footerConfig.socialLinks.map((social) => {
+                {c.socialLinks.map((social) => {
                   const IconComponent = socialIconMap[social.platform];
                   return (
                     <a
@@ -60,7 +63,7 @@ const Footer = () => {
           </div>
 
           {/* Links sections */}
-          {footerConfig.linkSections.map((section) => (
+          {c.linkSections.map((section) => (
             <div key={section.title}>
               <h4 className="font-display font-bold text-white text-sm uppercase tracking-wider mb-6">
                 {section.title}
@@ -83,25 +86,25 @@ const Footer = () => {
         </div>
 
         {/* Contact info */}
-        {(footerConfig.contact.address || footerConfig.contact.phone || footerConfig.contact.email) && (
+        {(c.contact.address || c.contact.phone || c.contact.email) && (
           <div className="mt-16 pt-8 border-t border-white/10">
             <div className="flex flex-wrap gap-8 justify-center lg:justify-start">
-              {footerConfig.contact.address && (
+              {c.contact.address && (
                 <div className="flex items-center gap-3 text-white/40">
                   <MapPin className="w-4 h-4 text-pink" />
-                  <span className="font-body text-sm">{footerConfig.contact.address}</span>
+                  <span className="font-body text-sm">{c.contact.address}</span>
                 </div>
               )}
-              {footerConfig.contact.phone && (
+              {c.contact.phone && (
                 <div className="flex items-center gap-3 text-white/40">
                   <Phone className="w-4 h-4 text-pink" />
-                  <span className="font-body text-sm">{footerConfig.contact.phone}</span>
+                  <span className="font-body text-sm">{c.contact.phone}</span>
                 </div>
               )}
-              {footerConfig.contact.email && (
+              {c.contact.email && (
                 <div className="flex items-center gap-3 text-white/40">
                   <Mail className="w-4 h-4 text-pink" />
-                  <span className="font-body text-sm">{footerConfig.contact.email}</span>
+                  <span className="font-body text-sm">{c.contact.email}</span>
                 </div>
               )}
             </div>
@@ -112,14 +115,14 @@ const Footer = () => {
       {/* Bottom bar */}
       <div className="w-full px-6 lg:px-12 py-6 border-t border-white/10">
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-          {footerConfig.copyrightText && (
+          {c.copyrightText && (
             <p className="font-body text-white/30 text-xs">
-              {currentYear} {footerConfig.copyrightText}
+              {currentYear} {c.copyrightText}
             </p>
           )}
-          {footerConfig.legalLinks.length > 0 && (
+          {c.legalLinks.length > 0 && (
             <div className="flex gap-6">
-              {footerConfig.legalLinks.map((link) => (
+              {c.legalLinks.map((link) => (
                 <a
                   key={link.label}
                   href={link.href}
@@ -135,10 +138,10 @@ const Footer = () => {
       </div>
 
       {/* Large decorative text */}
-      {footerConfig.decorativeText && (
+      {c.decorativeText && (
         <div className="absolute bottom-0 left-0 right-0 overflow-hidden pointer-events-none">
           <div className="font-display font-black text-[15vw] text-white/[0.02] leading-none text-center translate-y-1/3">
-            {footerConfig.decorativeText}
+            {c.decorativeText}
           </div>
         </div>
       )}

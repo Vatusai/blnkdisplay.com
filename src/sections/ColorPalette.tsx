@@ -1,11 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { colorPaletteConfig } from '../config';
+import { colorPaletteConfig, colorPaletteConfigEs } from '../config';
+import { useLang } from '../LangContext';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const ColorPalette = () => {
+  const lang = useLang();
+  const c = lang === 'es' ? colorPaletteConfigEs : colorPaletteConfig;
   const sectionRef = useRef<HTMLElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -103,7 +106,7 @@ const ColorPalette = () => {
     }, 1000);
   };
 
-  if (colorPaletteConfig.colors.length === 0) return null;
+  if (c.colors.length === 0) return null;
 
   return (
     <section
@@ -134,18 +137,18 @@ const ColorPalette = () => {
       <div className="relative z-10 w-full px-6 lg:px-12">
         {/* Section header */}
         <div className="mb-16 text-center">
-          {colorPaletteConfig.sectionLabel && (
+          {c.sectionLabel && (
             <div className="flex items-center justify-center gap-4 mb-4">
               <div className="w-12 h-px bg-pink" />
               <span className="font-body text-pink text-sm uppercase tracking-[0.3em]">
-                {colorPaletteConfig.sectionLabel}
+                {c.sectionLabel}
               </span>
               <div className="w-12 h-px bg-pink" />
             </div>
           )}
-          {(colorPaletteConfig.headingMain || colorPaletteConfig.headingAccent) && (
+          {(c.headingMain || c.headingAccent) && (
             <h2 className="font-display font-black text-5xl md:text-7xl text-white uppercase tracking-tight">
-              {colorPaletteConfig.headingMain}<span className="text-pink">{colorPaletteConfig.headingAccent}</span>
+              {c.headingMain}<span className="text-pink">{c.headingAccent}</span>
             </h2>
           )}
         </div>
@@ -155,7 +158,7 @@ const ColorPalette = () => {
           ref={gridRef}
           className="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/10 border-4 border-black"
         >
-          {colorPaletteConfig.colors.map((swatch, index) => (
+          {c.colors.map((swatch, index) => (
             <div
               key={swatch.nameSecondary}
               className={`color-card relative bg-black preserve-3d cursor-pointer group overflow-hidden ${
@@ -203,19 +206,19 @@ const ColorPalette = () => {
         ))}
 
         {/* Bottom text */}
-        {colorPaletteConfig.bottomText && (
+        {c.bottomText && (
           <div className="mt-16 text-center">
             <p className="font-body text-white/40 text-sm uppercase tracking-wider">
-              {colorPaletteConfig.bottomText}
+              {c.bottomText}
             </p>
           </div>
         )}
       </div>
 
       {/* Decorative text */}
-      {colorPaletteConfig.decorativeText && (
+      {c.decorativeText && (
         <div className="absolute bottom-0 right-0 font-display font-black text-[8rem] md:text-[15rem] text-white/[0.02] leading-none pointer-events-none select-none">
-          {colorPaletteConfig.decorativeText}
+          {c.decorativeText}
         </div>
       )}
     </section>

@@ -1,10 +1,17 @@
 import { useEffect, useState } from 'react';
 import { Menu, X } from 'lucide-react';
-import { navigationConfig } from '../config';
+import { navigationConfig, navigationConfigEs } from '../config';
+import type { Lang } from '../LangContext';
 
-const Navigation = () => {
+interface NavigationProps {
+  lang: Lang;
+  onToggleLang: () => void;
+}
+
+const Navigation = ({ lang, onToggleLang }: NavigationProps) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const c = lang === 'es' ? navigationConfigEs : navigationConfig;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -15,7 +22,7 @@ const Navigation = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  if (!navigationConfig.logo) return null;
+  if (!c.logo) return null;
 
   return (
     <>
@@ -29,22 +36,22 @@ const Navigation = () => {
         <div className="w-full px-6 lg:px-12 flex items-center justify-between">
           {/* Logo */}
           <a href="#" className="flex items-center" data-cursor-hover>
-            {navigationConfig.logoImage ? (
+            {c.logoImage ? (
               <img
-                src={navigationConfig.logoImage}
-                alt={navigationConfig.logo}
+                src={c.logoImage}
+                alt={c.logo}
                 className="h-10 w-auto object-contain"
               />
             ) : (
               <span className="font-display font-black text-xl tracking-tight text-white hover:text-pink transition-colors duration-300">
-                {navigationConfig.logo}<span className="text-pink">{navigationConfig.logoAccent}</span>
+                {c.logo}<span className="text-pink">{c.logoAccent}</span>
               </span>
             )}
           </a>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
-            {navigationConfig.navLinks.map((link) => (
+            {c.navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
@@ -53,10 +60,25 @@ const Navigation = () => {
                 {link.label}
               </a>
             ))}
-            {navigationConfig.ctaText && (
-              <button className="px-6 py-2 bg-pink text-black font-display font-bold text-sm uppercase tracking-wider hover:bg-white transition-colors duration-300">
-                {navigationConfig.ctaText}
-              </button>
+
+            {/* Language toggle */}
+            <button
+              onClick={onToggleLang}
+              className="font-body text-sm uppercase tracking-widest flex items-center gap-1"
+              data-cursor-hover
+            >
+              <span className={lang === 'es' ? 'text-pink' : 'text-white/40'}>ES</span>
+              <span className="text-white/20">|</span>
+              <span className={lang === 'en' ? 'text-pink' : 'text-white/40'}>EN</span>
+            </button>
+
+            {c.ctaText && (
+              <a
+                href="#contact"
+                className="px-6 py-2 bg-pink text-black font-display font-bold text-sm uppercase tracking-wider hover:bg-white transition-colors duration-300"
+              >
+                {c.ctaText}
+              </a>
             )}
           </div>
 
@@ -79,7 +101,7 @@ const Navigation = () => {
         }`}
       >
         <div className="flex flex-col items-center justify-center h-full gap-8">
-          {navigationConfig.navLinks.map((link, index) => (
+          {c.navLinks.map((link, index) => (
             <a
               key={link.href}
               href={link.href}
@@ -94,16 +116,33 @@ const Navigation = () => {
               {link.label}
             </a>
           ))}
-          {navigationConfig.ctaText && (
-            <button
+
+          {/* Language toggle mobile */}
+          <button
+            onClick={onToggleLang}
+            className="font-body text-xl uppercase tracking-widest flex items-center gap-2"
+            style={{
+              transitionDelay: isMobileMenuOpen ? `${c.navLinks.length * 100}ms` : '0ms',
+              opacity: isMobileMenuOpen ? 1 : 0,
+            }}
+          >
+            <span className={lang === 'es' ? 'text-pink' : 'text-white/40'}>ES</span>
+            <span className="text-white/20">|</span>
+            <span className={lang === 'en' ? 'text-pink' : 'text-white/40'}>EN</span>
+          </button>
+
+          {c.ctaText && (
+            <a
+              href="#contact"
+              onClick={() => setIsMobileMenuOpen(false)}
               className="mt-8 px-8 py-3 bg-pink text-black font-display font-bold text-lg uppercase tracking-wider"
               style={{
-                transitionDelay: isMobileMenuOpen ? `${navigationConfig.navLinks.length * 100}ms` : '0ms',
+                transitionDelay: isMobileMenuOpen ? `${(c.navLinks.length + 1) * 100}ms` : '0ms',
                 opacity: isMobileMenuOpen ? 1 : 0,
               }}
             >
-              {navigationConfig.ctaText}
-            </button>
+              {c.ctaText}
+            </a>
           )}
         </div>
       </div>

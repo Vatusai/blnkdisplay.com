@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { contactConfig } from '../config';
+import { contactConfig, contactConfigEs } from '../config';
+import { useLang } from '../LangContext';
 import { Mail, Phone, MapPin, ArrowRight, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -10,6 +11,8 @@ import { Textarea } from '@/components/ui/textarea';
 gsap.registerPlugin(ScrollTrigger);
 
 const Contact = () => {
+  const lang = useLang();
+  const c = lang === 'es' ? contactConfigEs : contactConfig;
   const sectionRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
@@ -94,7 +97,7 @@ const Contact = () => {
     setError(false);
 
     try {
-      const response = await fetch(contactConfig.scriptUrl, {
+      const response = await fetch(c.scriptUrl, {
         method: 'POST',
         body: JSON.stringify(formData),
       });
@@ -139,13 +142,13 @@ const Contact = () => {
           {/* Left column - info */}
           <div ref={contentRef}>
             <span className="reveal-text block font-body text-xs uppercase tracking-[0.3em] text-pink mb-4">
-              {contactConfig.sectionLabel}
+              {c.sectionLabel}
             </span>
             <h2 className="reveal-text font-display font-black text-3xl md:text-5xl lg:text-6xl text-white leading-[0.95] tracking-tight mb-6">
-              {contactConfig.headingMain}
+              {c.headingMain}
             </h2>
             <p className="reveal-text font-body text-base md:text-lg text-white/60 leading-relaxed mb-12 max-w-md">
-              {contactConfig.description}
+              {c.description}
             </p>
 
             {/* Contact info */}
@@ -155,9 +158,9 @@ const Contact = () => {
                   <Mail className="w-5 h-5 text-pink" />
                 </div>
                 <div>
-                  <span className="block font-body text-xs uppercase tracking-wider text-white/40 mb-1">Email</span>
+                  <span className="block font-body text-xs uppercase tracking-wider text-white/40 mb-1">{c.contactLabels.email}</span>
                   <span className="font-body text-white group-hover:text-pink transition-colors duration-300">
-                    {contactConfig.email}
+                    {c.email}
                   </span>
                 </div>
               </div>
@@ -167,9 +170,9 @@ const Contact = () => {
                   <Phone className="w-5 h-5 text-pink" />
                 </div>
                 <div>
-                  <span className="block font-body text-xs uppercase tracking-wider text-white/40 mb-1">Phone</span>
+                  <span className="block font-body text-xs uppercase tracking-wider text-white/40 mb-1">{c.contactLabels.phone}</span>
                   <span className="font-body text-white group-hover:text-pink transition-colors duration-300">
-                    {contactConfig.phone}
+                    {c.phone}
                   </span>
                 </div>
               </div>
@@ -179,9 +182,9 @@ const Contact = () => {
                   <MapPin className="w-5 h-5 text-pink" />
                 </div>
                 <div>
-                  <span className="block font-body text-xs uppercase tracking-wider text-white/40 mb-1">Location</span>
+                  <span className="block font-body text-xs uppercase tracking-wider text-white/40 mb-1">{c.contactLabels.location}</span>
                   <span className="font-body text-white group-hover:text-pink transition-colors duration-300">
-                    {contactConfig.location}
+                    {c.location}
                   </span>
                 </div>
               </div>
@@ -195,7 +198,7 @@ const Contact = () => {
               >
                 <Download className="w-5 h-5" />
                 <span className="font-body text-sm uppercase tracking-wider">
-                  {contactConfig.ctaSecondary}
+                  {c.ctaSecondary}
                 </span>
               </button>
             </div>
@@ -209,8 +212,8 @@ const Contact = () => {
                   <div className="w-16 h-16 bg-pink flex items-center justify-center mx-auto mb-6">
                     <ArrowRight className="w-8 h-8 text-black" />
                   </div>
-                  <h3 className="font-display font-bold text-2xl text-white mb-2">Message sent!</h3>
-                  <p className="font-body text-white/60">We'll be in touch soon.</p>
+                  <h3 className="font-display font-bold text-2xl text-white mb-2">{c.successTitle}</h3>
+                  <p className="font-body text-white/60">{c.successMessage}</p>
                 </div>
               </div>
             ) : null}
@@ -222,7 +225,7 @@ const Contact = () => {
             >
               <div className="form-field">
                 <label className="block font-body text-xs uppercase tracking-wider text-white/40 mb-2">
-                  Name
+                  {c.formLabels.name}
                 </label>
                 <Input
                   type="text"
@@ -231,13 +234,13 @@ const Contact = () => {
                   onChange={handleChange}
                   required
                   className="w-full bg-transparent border-white/20 text-white placeholder:text-white/30 focus:border-pink focus:ring-pink/20 rounded-none h-12"
-                  placeholder="Your name"
+                  placeholder={c.formPlaceholders.name}
                 />
               </div>
 
               <div className="form-field">
                 <label className="block font-body text-xs uppercase tracking-wider text-white/40 mb-2">
-                  Email
+                  {c.formLabels.email}
                 </label>
                 <Input
                   type="email"
@@ -246,13 +249,13 @@ const Contact = () => {
                   onChange={handleChange}
                   required
                   className="w-full bg-transparent border-white/20 text-white placeholder:text-white/30 focus:border-pink focus:ring-pink/20 rounded-none h-12"
-                  placeholder="your@email.com"
+                  placeholder={c.formPlaceholders.email}
                 />
               </div>
 
               <div className="form-field">
                 <label className="block font-body text-xs uppercase tracking-wider text-white/40 mb-2">
-                  Company
+                  {c.formLabels.company}
                 </label>
                 <Input
                   type="text"
@@ -260,13 +263,13 @@ const Contact = () => {
                   value={formData.company}
                   onChange={handleChange}
                   className="w-full bg-transparent border-white/20 text-white placeholder:text-white/30 focus:border-pink focus:ring-pink/20 rounded-none h-12"
-                  placeholder="Your company"
+                  placeholder={c.formPlaceholders.company}
                 />
               </div>
 
               <div className="form-field">
                 <label className="block font-body text-xs uppercase tracking-wider text-white/40 mb-2">
-                  Event Type
+                  {c.formLabels.eventType}
                 </label>
                 <Input
                   type="text"
@@ -274,13 +277,13 @@ const Contact = () => {
                   value={formData.eventType}
                   onChange={handleChange}
                   className="w-full bg-transparent border-white/20 text-white placeholder:text-white/30 focus:border-pink focus:ring-pink/20 rounded-none h-12"
-                  placeholder="Concert, corporate event, etc."
+                  placeholder={c.formPlaceholders.eventType}
                 />
               </div>
 
               <div className="form-field">
                 <label className="block font-body text-xs uppercase tracking-wider text-white/40 mb-2">
-                  Message
+                  {c.formLabels.message}
                 </label>
                 <Textarea
                   name="message"
@@ -288,7 +291,7 @@ const Contact = () => {
                   onChange={handleChange}
                   rows={4}
                   className="w-full bg-transparent border-white/20 text-white placeholder:text-white/30 focus:border-pink focus:ring-pink/20 rounded-none resize-none"
-                  placeholder="Tell us about your project..."
+                  placeholder={c.formPlaceholders.message}
                 />
               </div>
 
@@ -299,18 +302,18 @@ const Contact = () => {
                   className="w-full bg-pink text-black font-display font-bold text-sm uppercase tracking-wider h-14 hover:bg-pink-light transition-colors duration-300 rounded-none disabled:opacity-60 disabled:cursor-not-allowed"
                   data-cursor-hover
                 >
-                  {isSubmitting ? 'Sending...' : contactConfig.ctaText}
+                  {isSubmitting ? c.sendingText : c.ctaText}
                   {!isSubmitting && <ArrowRight className="w-4 h-4 ml-2" />}
                 </Button>
 
                 {error && (
                   <p className="font-body text-sm text-red-400 text-center mt-4">
-                    Something went wrong. Please email us directly at{' '}
+                    {c.errorMessage}{' '}
                     <a
-                      href={`mailto:${contactConfig.email}`}
+                      href={`mailto:${c.email}`}
                       className="underline hover:text-red-300 transition-colors"
                     >
-                      {contactConfig.email}
+                      {c.email}
                     </a>
                   </p>
                 )}

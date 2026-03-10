@@ -2,11 +2,14 @@ import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowDown } from 'lucide-react';
-import { heroConfig } from '../config';
+import { heroConfig, heroConfigEs } from '../config';
+import { useLang } from '../LangContext';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const Hero = () => {
+  const lang = useLang();
+  const c = lang === 'es' ? heroConfigEs : heroConfig;
   const sectionRef = useRef<HTMLElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
@@ -104,10 +107,10 @@ const Hero = () => {
     };
   }, []);
 
-  if (!heroConfig.titleLine1 && !heroConfig.titleLine2) return null;
+  if (!c.titleLine1 && !c.titleLine2) return null;
 
-  const rows = heroConfig.gridRows || 6;
-  const cols = heroConfig.gridCols || 8;
+  const rows = c.gridRows || 6;
+  const cols = c.gridCols || 8;
 
   // Generate grid cells
   const generateGridCells = () => {
@@ -115,7 +118,7 @@ const Hero = () => {
 
     for (let row = 0; row < rows; row++) {
       for (let col = 0; col < cols; col++) {
-        const isPink = heroConfig.pinkCells.some((p) => p.row === row && p.col === col);
+        const isPink = c.pinkCells.some((p) => p.row === row && p.col === col);
         const cellIndex = row * cols + col;
 
         cells.push(
@@ -129,7 +132,7 @@ const Hero = () => {
               top: `${(row / rows) * 100}%`,
               width: `${100 / cols}%`,
               height: `${100 / rows}%`,
-              backgroundImage: isPink ? 'none' : heroConfig.backgroundImage ? `url(${heroConfig.backgroundImage})` : 'none',
+              backgroundImage: isPink ? 'none' : c.backgroundImage ? `url(${c.backgroundImage})` : 'none',
               backgroundPosition: `${(col / (cols - 1)) * 100}% ${(row / (rows - 1)) * 100}%`,
               backgroundSize: `${cols * 100}% ${rows * 100}%`,
               transformOrigin: 'center center',
@@ -163,22 +166,22 @@ const Hero = () => {
       >
         <div className="relative w-full max-w-6xl px-6">
           {/* Title Line 1 */}
-          {heroConfig.titleLine1 && (
+          {c.titleLine1 && (
             <div className="flex justify-start mb-4">
               <div className="title-block bg-pink px-8 py-4 pointer-events-auto hover:scale-110 transition-transform duration-300">
                 <span className="font-display font-black text-6xl md:text-8xl lg:text-9xl text-black tracking-tighter">
-                  {heroConfig.titleLine1}
+                  {c.titleLine1}
                 </span>
               </div>
             </div>
           )}
 
           {/* Title Line 2 */}
-          {heroConfig.titleLine2 && (
+          {c.titleLine2 && (
             <div className="flex justify-end">
               <div className="title-block bg-pink px-8 py-4 pointer-events-auto hover:scale-110 transition-transform duration-300">
                 <span className="font-display font-black text-6xl md:text-8xl lg:text-9xl text-black tracking-tighter">
-                  {heroConfig.titleLine2}
+                  {c.titleLine2}
                 </span>
               </div>
             </div>
@@ -187,23 +190,23 @@ const Hero = () => {
       </div>
 
       {/* Subtitle */}
-      {heroConfig.subtitle && (
+      {c.subtitle && (
         <div className="absolute bottom-32 left-0 right-0 text-center z-20">
           <p className="font-body text-white/60 text-sm md:text-base uppercase tracking-[0.3em]">
-            {heroConfig.subtitle}
+            {c.subtitle}
           </p>
         </div>
       )}
 
       {/* CTA Button */}
-      {heroConfig.ctaText && (
+      {c.ctaText && (
         <div className="absolute bottom-16 left-0 right-0 flex justify-center z-20">
           <a
-            href={heroConfig.ctaHref || '#products'}
+            href={c.ctaHref || '#products'}
             className="group flex items-center gap-3 px-8 py-4 border-2 border-pink text-pink font-display font-bold text-sm uppercase tracking-wider hover:bg-pink hover:text-black transition-all duration-300"
             data-cursor-hover
           >
-            {heroConfig.ctaText}
+            {c.ctaText}
             <ArrowDown className="w-4 h-4 group-hover:translate-y-1 transition-transform duration-300" />
           </a>
         </div>

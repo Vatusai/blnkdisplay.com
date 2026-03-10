@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Hero from './sections/Hero';
@@ -14,11 +14,13 @@ import Footer from './sections/Footer';
 import Navigation from './components/Navigation';
 import CustomCursor from './components/CustomCursor';
 import WhatsAppButton from './components/WhatsAppButton';
+import { LangContext, type Lang } from './LangContext';
 
 gsap.registerPlugin(ScrollTrigger);
 
 function App() {
   const mainRef = useRef<HTMLDivElement>(null);
+  const [lang, setLang] = useState<Lang>('es');
 
   useEffect(() => {
     // Velocity-based skew effect
@@ -66,33 +68,35 @@ function App() {
   }, []);
 
   return (
-    <div className="relative bg-black min-h-screen overflow-x-hidden">
-      {/* Grain overlay */}
-      <div className="grain-overlay" />
-      
-      {/* Custom cursor */}
-      <CustomCursor />
+    <LangContext.Provider value={lang}>
+      <div className="relative bg-black min-h-screen overflow-x-hidden">
+        {/* Grain overlay */}
+        <div className="grain-overlay" />
 
-      {/* WhatsApp floating button */}
-      <WhatsAppButton />
+        {/* Custom cursor */}
+        <CustomCursor />
 
-      {/* Navigation */}
-      <Navigation />
-      
-      {/* Main content */}
-      <main ref={mainRef} className="relative transition-transform duration-100 ease-out will-change-transform">
-        <Hero />
-        <ProductShowcase />
-        <ColorPalette />
-        <Finale />
-        <VideoShowcase />
-        <Applications />
-        <Specs />
-        <Workflow />
-        <Contact />
-        <Footer />
-      </main>
-    </div>
+        {/* WhatsApp floating button */}
+        <WhatsAppButton />
+
+        {/* Navigation */}
+        <Navigation lang={lang} onToggleLang={() => setLang(l => l === 'es' ? 'en' : 'es')} />
+
+        {/* Main content */}
+        <main ref={mainRef} className="relative transition-transform duration-100 ease-out will-change-transform">
+          <Hero />
+          <ProductShowcase />
+          <ColorPalette />
+          <Finale />
+          <VideoShowcase />
+          <Applications />
+          <Specs />
+          <Workflow />
+          <Contact />
+          <Footer />
+        </main>
+      </div>
+    </LangContext.Provider>
   );
 }
 

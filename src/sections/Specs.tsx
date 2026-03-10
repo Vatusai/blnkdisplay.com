@@ -1,7 +1,8 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { specsConfig } from '../config';
+import { specsConfig, specsConfigEs } from '../config';
+import { useLang } from '../LangContext';
 import { Zap, Sun, RefreshCw } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -10,9 +11,13 @@ const iconMap: Record<string, React.ReactNode> = {
   'Pitch': <Zap className="w-8 h-8" />,
   'Brightness': <Sun className="w-8 h-8" />,
   'Refresh': <RefreshCw className="w-8 h-8" />,
+  'Brillo': <Sun className="w-8 h-8" />,
+  'Refresco': <RefreshCw className="w-8 h-8" />,
 };
 
 const Specs = () => {
+  const lang = useLang();
+  const c = lang === 'es' ? specsConfigEs : specsConfig;
   const sectionRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
@@ -84,7 +89,7 @@ const Specs = () => {
     };
   }, []);
 
-  if (!specsConfig.specs.length) return null;
+  if (!c.specs.length) return null;
 
   return (
     <section
@@ -102,19 +107,19 @@ const Specs = () => {
           {/* Left column - heading */}
           <div ref={contentRef} className="lg:col-span-2">
             <span className="reveal-text block font-body text-xs uppercase tracking-[0.3em] text-pink mb-4">
-              {specsConfig.sectionLabel}
+              {c.sectionLabel}
             </span>
             <h2 className="reveal-text font-display font-black text-3xl md:text-4xl lg:text-5xl text-white leading-[0.95] tracking-tight mb-6">
-              {specsConfig.headingMain}
+              {c.headingMain}
             </h2>
             <p className="reveal-text font-body text-base text-white/60 leading-relaxed">
-              {specsConfig.description}
+              {c.description}
             </p>
           </div>
 
           {/* Right column - spec cards */}
           <div ref={cardsRef} className="lg:col-span-3 space-y-4">
-            {specsConfig.specs.map((spec, index) => (
+            {c.specs.map((spec, index) => (
               <div
                 key={index}
                 className="spec-card group relative bg-white p-6 md:p-8 flex items-start gap-6 transition-all duration-300 hover:translate-x-2"

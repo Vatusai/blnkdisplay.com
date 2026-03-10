@@ -2,11 +2,14 @@ import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowRight } from 'lucide-react';
-import { finaleConfig } from '../config';
+import { finaleConfig, finaleConfigEs } from '../config';
+import { useLang } from '../LangContext';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const Finale = () => {
+  const lang = useLang();
+  const c = lang === 'es' ? finaleConfigEs : finaleConfig;
   const sectionRef = useRef<HTMLElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
@@ -123,7 +126,7 @@ const Finale = () => {
     };
   }, []);
 
-  if (!finaleConfig.headingMain && !finaleConfig.headingAccent) return null;
+  if (!c.headingMain && !c.headingAccent) return null;
 
   return (
     <section
@@ -142,32 +145,32 @@ const Finale = () => {
         {/* Text content - 60% */}
         <div className="lg:col-span-3 flex items-center px-6 lg:px-16 py-24">
           <div ref={textRef} className="max-w-2xl">
-            {finaleConfig.sectionLabel && (
+            {c.sectionLabel && (
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-16 h-px bg-pink" />
                 <span className="font-body text-pink text-sm uppercase tracking-[0.3em]">
-                  {finaleConfig.sectionLabel}
+                  {c.sectionLabel}
                 </span>
               </div>
             )}
 
-            {(finaleConfig.headingMain || finaleConfig.headingAccent) && (
+            {(c.headingMain || c.headingAccent) && (
               <h2 className="glitch-title font-display font-black text-5xl md:text-7xl lg:text-8xl text-white uppercase tracking-tight mb-8 leading-none">
-                {finaleConfig.headingMain}
+                {c.headingMain}
                 <br />
-                <span className="text-pink">{finaleConfig.headingAccent}</span>
+                <span className="text-pink">{c.headingAccent}</span>
               </h2>
             )}
 
-            {finaleConfig.tagline && (
+            {c.tagline && (
               <p className="font-body text-white/60 text-lg md:text-xl leading-relaxed mb-8">
-                {finaleConfig.tagline}
+                {c.tagline}
               </p>
             )}
 
-            {finaleConfig.features.length > 0 && (
+            {c.features.length > 0 && (
               <div className="flex flex-wrap gap-6 mb-12">
-                {finaleConfig.features.map((feature, index) => (
+                {c.features.map((feature, index) => (
                   <div key={index} className="flex items-center gap-3">
                     <div className="w-3 h-3 bg-pink" />
                     <span className="font-body text-white/40 text-sm uppercase tracking-wider">
@@ -178,13 +181,13 @@ const Finale = () => {
               </div>
             )}
 
-            {finaleConfig.ctaText && (
+            {c.ctaText && (
               <a
-                href={finaleConfig.ctaHref || '#'}
+                href={c.ctaHref || '#'}
                 className="group inline-flex items-center gap-4 px-8 py-4 bg-pink text-black font-display font-bold text-sm uppercase tracking-wider hover:bg-white transition-all duration-300"
                 data-cursor-hover
               >
-                {finaleConfig.ctaText}
+                {c.ctaText}
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" />
               </a>
             )}
@@ -192,7 +195,7 @@ const Finale = () => {
         </div>
 
         {/* Image - 40% */}
-        {finaleConfig.image && (
+        {c.image && (
           <div className="lg:col-span-2 relative overflow-hidden">
             <div
               ref={imageRef}
@@ -200,8 +203,8 @@ const Finale = () => {
               style={{ perspective: '1000px' }}
             >
               <img
-                src={finaleConfig.image}
-                alt={finaleConfig.imageAlt}
+                src={c.image}
+                alt={c.imageAlt}
                 className="w-full h-full object-cover"
               />
 
@@ -217,9 +220,9 @@ const Finale = () => {
       </div>
 
       {/* Floating text decoration */}
-      {finaleConfig.decorativeText && (
+      {c.decorativeText && (
         <div className="absolute bottom-12 left-6 font-display font-black text-[6rem] md:text-[10rem] text-white/[0.02] leading-none pointer-events-none select-none">
-          {finaleConfig.decorativeText}
+          {c.decorativeText}
         </div>
       )}
     </section>

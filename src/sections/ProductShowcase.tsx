@@ -2,11 +2,14 @@ import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ShoppingBag, Sparkles } from 'lucide-react';
-import { productShowcaseConfig } from '../config';
+import { productShowcaseConfig, productShowcaseConfigEs } from '../config';
+import { useLang } from '../LangContext';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const ProductShowcase = () => {
+  const lang = useLang();
+  const c = lang === 'es' ? productShowcaseConfigEs : productShowcaseConfig;
   const sectionRef = useRef<HTMLElement>(null);
   const productRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -124,7 +127,7 @@ const ProductShowcase = () => {
     };
   }, []);
 
-  if (!productShowcaseConfig.productName && !productShowcaseConfig.headingMain) return null;
+  if (!c.productName && !c.headingMain) return null;
 
   return (
     <section
@@ -144,17 +147,17 @@ const ProductShowcase = () => {
       <div className="relative z-10 w-full px-6 lg:px-12">
         {/* Section header */}
         <div className="mb-16">
-          {productShowcaseConfig.sectionLabel && (
+          {c.sectionLabel && (
             <div className="flex items-center gap-4 mb-4">
               <div className="w-12 h-px bg-pink" />
               <span className="font-body text-pink text-sm uppercase tracking-[0.3em]">
-                {productShowcaseConfig.sectionLabel}
+                {c.sectionLabel}
               </span>
             </div>
           )}
-          {(productShowcaseConfig.headingMain || productShowcaseConfig.headingAccent) && (
+          {(c.headingMain || c.headingAccent) && (
             <h2 className="font-display font-black text-5xl md:text-7xl text-white uppercase tracking-tight">
-              {productShowcaseConfig.headingMain}<span className="text-pink">{productShowcaseConfig.headingAccent}</span>
+              {c.headingMain}<span className="text-pink">{c.headingAccent}</span>
             </h2>
           )}
         </div>
@@ -174,10 +177,10 @@ const ProductShowcase = () => {
               className="relative preserve-3d"
               style={{ transformStyle: 'preserve-3d' }}
             >
-              {productShowcaseConfig.productImage && (
+              {c.productImage && (
                 <img
-                  src={productShowcaseConfig.productImage}
-                  alt={productShowcaseConfig.productImageAlt}
+                  src={c.productImage}
+                  alt={c.productImageAlt}
                   className="w-64 md:w-80 lg:w-96 h-auto drop-shadow-2xl"
                 />
               )}
@@ -192,9 +195,9 @@ const ProductShowcase = () => {
             </div>
 
             {/* Price tag */}
-            {productShowcaseConfig.price && (
+            {c.price && (
               <div className="absolute top-0 right-0 lg:right-12 bg-pink text-black px-6 py-3 font-display font-black text-2xl">
-                {productShowcaseConfig.price}
+                {c.price}
               </div>
             )}
           </div>
@@ -202,22 +205,22 @@ const ProductShowcase = () => {
           {/* Product info */}
           <div ref={contentRef} className="space-y-8">
             <div>
-              {productShowcaseConfig.productName && (
+              {c.productName && (
                 <h3 className="font-display font-bold text-3xl md:text-4xl text-white mb-4">
-                  {productShowcaseConfig.productName}
+                  {c.productName}
                 </h3>
               )}
-              {productShowcaseConfig.description && (
+              {c.description && (
                 <p className="font-body text-white/60 text-lg leading-relaxed">
-                  {productShowcaseConfig.description}
+                  {c.description}
                 </p>
               )}
             </div>
 
             {/* Features */}
-            {productShowcaseConfig.features.length > 0 && (
+            {c.features.length > 0 && (
               <div className="grid grid-cols-2 gap-6">
-                {productShowcaseConfig.features.map((feature, index) => (
+                {c.features.map((feature, index) => (
                   <div key={index} className="border border-white/10 p-6 hover:border-pink transition-colors duration-300">
                     <div className="text-pink font-display font-black text-3xl mb-2">{feature.value}</div>
                     <div className="font-body text-white/40 text-sm uppercase tracking-wider">
@@ -229,15 +232,15 @@ const ProductShowcase = () => {
             )}
 
             {/* Color swatches */}
-            {productShowcaseConfig.colorSwatches.length > 0 && (
+            {c.colorSwatches.length > 0 && (
               <div>
-                {productShowcaseConfig.colorSwatchesLabel && (
+                {c.colorSwatchesLabel && (
                   <p className="font-body text-white/40 text-sm uppercase tracking-wider mb-4">
-                    {productShowcaseConfig.colorSwatchesLabel}
+                    {c.colorSwatchesLabel}
                   </p>
                 )}
                 <div className="flex gap-3">
-                  {productShowcaseConfig.colorSwatches.map((color, index) => (
+                  {c.colorSwatches.map((color, index) => (
                     <button
                       key={index}
                       className="w-12 h-12 rounded-full border-2 border-transparent hover:border-white transition-all duration-300 hover:scale-110"
@@ -250,13 +253,13 @@ const ProductShowcase = () => {
             )}
 
             {/* CTA */}
-            {productShowcaseConfig.ctaText && (
+            {c.ctaText && (
               <button
                 className="group flex items-center gap-4 px-8 py-4 bg-pink text-black font-display font-bold text-sm uppercase tracking-wider hover:bg-white transition-all duration-300"
                 data-cursor-hover
               >
                 <ShoppingBag className="w-5 h-5" />
-                {productShowcaseConfig.ctaText}
+                {c.ctaText}
               </button>
             )}
           </div>
@@ -264,9 +267,9 @@ const ProductShowcase = () => {
       </div>
 
       {/* Decorative elements */}
-      {productShowcaseConfig.decorativeText && (
+      {c.decorativeText && (
         <div className="absolute bottom-12 left-6 font-display font-black text-[12rem] text-white/[0.02] leading-none pointer-events-none select-none">
-          {productShowcaseConfig.decorativeText}
+          {c.decorativeText}
         </div>
       )}
     </section>

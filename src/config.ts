@@ -192,12 +192,14 @@ export interface ApplicationsConfig {
   headingAccent: string;
   applications: Application[];
   decorativeText?: string;
+  learnMoreText: string;
 }
 
 export const applicationsConfig: ApplicationsConfig = {
   sectionLabel: "APPLICATIONS",
   headingMain: "Any event.",
   headingAccent: "Any scale.",
+  learnMoreText: "Learn more",
   applications: [
     {
       title: "Concerts & Live Shows",
@@ -297,6 +299,14 @@ export const workflowConfig: WorkflowConfig = {
 // Contact Section
 // ----------------------------------------------------------------------------
 
+export interface ContactFormLabels {
+  name: string;
+  email: string;
+  company: string;
+  eventType: string;
+  message: string;
+}
+
 export interface ContactConfig {
   sectionLabel: string;
   headingMain: string;
@@ -308,6 +318,13 @@ export interface ContactConfig {
   whatsapp: string;
   location: string;
   scriptUrl: string;
+  formLabels: ContactFormLabels;
+  formPlaceholders: ContactFormLabels;
+  contactLabels: { email: string; phone: string; location: string };
+  successTitle: string;
+  successMessage: string;
+  sendingText: string;
+  errorMessage: string;
 }
 
 export const contactConfig: ContactConfig = {
@@ -321,6 +338,13 @@ export const contactConfig: ContactConfig = {
   whatsapp: "50683384214",
   location: "San Jose, Costa Rica",
   scriptUrl: "https://script.google.com/macros/s/AKfycbxC4Kg9DTM8HnZhBOLExpCM7PZcUz2F0HWgk5d8ZLiZvQLP6u61K_S-e4fzGCV0gLS5Gg/exec",
+  formLabels: { name: "Name", email: "Email", company: "Company", eventType: "Event Type", message: "Message" },
+  formPlaceholders: { name: "Your name", email: "your@email.com", company: "Your company", eventType: "Concert, corporate event, etc.", message: "Tell us about your project..." },
+  contactLabels: { email: "Email", phone: "Phone", location: "Location" },
+  successTitle: "Message sent!",
+  successMessage: "We'll be in touch soon.",
+  sendingText: "Sending...",
+  errorMessage: "Something went wrong. Please email us directly at",
 };
 
 // ----------------------------------------------------------------------------
@@ -417,6 +441,10 @@ export interface VideoConfig {
   description: string;
   videoSrc: string;
   posterImage: string;
+  playLabel: string;
+  pauseLabel: string;
+  muteLabel: string;
+  unmuteLabel: string;
 }
 
 export const videoConfig: VideoConfig = {
@@ -426,4 +454,154 @@ export const videoConfig: VideoConfig = {
   description: "From flat walls to curved cylinders — BLNK Display systems deployed across events, retail, and exhibitions.",
   videoSrc: "/video/demo_reel.mp4",
   posterImage: "/images/hero_stage_blnk.jpg",
+  playLabel: "Play",
+  pauseLabel: "Pause",
+  muteLabel: "Mute",
+  unmuteLabel: "Unmute",
+};
+
+// ============================================================================
+// SPANISH (ES) TRANSLATIONS
+// ============================================================================
+
+export const navigationConfigEs: NavigationConfig = {
+  ...navigationConfig,
+  navLinks: [
+    { label: "Productos", href: "#products" },
+    { label: "Proyectos", href: "#projects" },
+    { label: "Soporte", href: "#support" },
+    { label: "Contacto", href: "#contact" },
+  ],
+  ctaText: "Solicitar cotización",
+};
+
+export const heroConfigEs: HeroConfig = {
+  ...heroConfig,
+  subtitle: "SISTEMA BLNK DISPLAY",
+  ctaText: "Explorar el sistema",
+};
+
+export const productShowcaseConfigEs: ProductShowcaseConfig = {
+  ...productShowcaseConfig,
+  sectionLabel: "HARDWARE MODULAR",
+  headingMain: "Panel de precisión.",
+  headingAccent: "Control instantáneo.",
+  description: "Rigging, señal y potencia—integrados. Mapea contenido en minutos, no en horas. Nuestros paneles LED modulares están diseñados para un despliegue rápido e impacto visual impresionante.",
+  features: [
+    { value: "2.6mm", label: "Pixel Pitch" },
+    { value: "4500", label: "Brillo (Nits)" },
+    { value: "7680Hz", label: "Tasa de Refresco" },
+  ],
+  colorSwatchesLabel: "Configuraciones disponibles",
+  ctaText: "Ver especificaciones",
+  productImageAlt: "Detalle del panel LED BLNK",
+  decorativeText: "PRECISIÓN",
+};
+
+export const colorPaletteConfigEs: ColorPaletteConfig = {
+  ...colorPaletteConfig,
+  sectionLabel: "GEOMETRÍA DE ESCENARIO",
+  headingMain: "Curva",
+  headingAccent: "el momento.",
+  colors: [
+    { name: "Cóncava", nameSecondary: "Curva interior", color: "#FF2D8F", description: "Experiencia inmersiva para el público" },
+    { name: "Convexa", nameSecondary: "Curva exterior", color: "#00D4FF", description: "Máximos ángulos de visión" },
+    { name: "Plana", nameSecondary: "Estándar", color: "#FFFFFF", description: "Presentación clásica" },
+    { name: "Personalizada", nameSecondary: "Tu visión", color: "#1A1A1A", description: "Cualquier forma imaginable" },
+  ],
+  bottomText: "Rigging rápido. Sin costuras visibles.",
+  decorativeText: "CURVA",
+};
+
+export const finaleConfigEs: FinaleConfig = {
+  ...finaleConfig,
+  sectionLabel: "SISTEMA MODULAR",
+  headingMain: "Construye",
+  headingAccent: "cualquier lienzo.",
+  tagline: "Apila, cuelga o monta en el suelo. Un solo sistema—arenas, galerías, pop-ups. Desde activaciones de marca íntimas hasta conciertos de escala estadio, BLNK Display transforma cualquier espacio en una experiencia visual inmersiva.",
+  features: ["Despliegue Rápido", "Rigging Sin Herramientas", "Soporte 24/7"],
+  ctaText: "Explorar configuraciones",
+  imageAlt: "Sistema LED Modular",
+  decorativeText: "CONSTRUYE",
+};
+
+export const applicationsConfigEs: ApplicationsConfig = {
+  ...applicationsConfig,
+  sectionLabel: "APLICACIONES",
+  headingMain: "Cualquier evento.",
+  headingAccent: "Cualquier escala.",
+  learnMoreText: "Ver más",
+  applications: [
+    { title: "Conciertos y Shows en Vivo", description: "Visuales impactantes que amplifican cada actuación", image: "/images/app_concerts.jpg" },
+    { title: "Eventos Corporativos", description: "Pantallas profesionales para presentaciones y lanzamientos", image: "/images/app_corporate.jpg" },
+    { title: "Activaciones de Marca", description: "Experiencias inmersivas que cautivan audiencias", image: "/images/app_brand_activation.jpg" },
+    { title: "Espacios Exteriores y Públicos", description: "Pantallas de gran escala para estadios, centros comerciales y espacios públicos", image: "/images/app_outdoor.jpg" },
+    { title: "Exhibiciones y Ferias", description: "Estructuras LED curvas y cilíndricas que detienen el tráfico", image: "/images/app_exhibition.jpg" },
+  ],
+};
+
+export const specsConfigEs: SpecsConfig = {
+  ...specsConfig,
+  sectionLabel: "ESPECIFICACIONES",
+  headingMain: "Specs que no interrumpen.",
+  description: "Optimizamos la velocidad de rigging, el orden de cables y la estabilidad de imagen—para que tu equipo pueda concentrarse en el show.",
+  specs: [
+    { title: "Pitch", value: "2.6mm / 3.9mm / 4.8mm", description: "Claridad perfecta a cualquier distancia de visión" },
+    { title: "Brillo", value: "800–4500 nits", description: "Desde espacios interiores hasta luz solar directa" },
+    { title: "Refresco", value: "1920–7680 Hz", description: "Rendimiento sin parpadeo, compatible con cámara" },
+  ],
+};
+
+export const workflowConfigEs: WorkflowConfig = {
+  ...workflowConfig,
+  sectionLabel: "PROCESO",
+  headingMain: "Del boceto al show.",
+  steps: [
+    { number: "01", title: "Layout", description: "Envía dimensiones + tipo de contenido. Recomendamos pitch, curva y rigging." },
+    { number: "02", title: "Montaje", description: "Paquetes preconfigurados, cables etiquetados y un solo punto de contacto." },
+    { number: "03", title: "Soporte", description: "Técnicos en sitio, monitoreo en tiempo real y kits de reemplazo rápido." },
+  ],
+};
+
+export const contactConfigEs: ContactConfig = {
+  ...contactConfig,
+  sectionLabel: "CONTACTO",
+  headingMain: "Construyamos tu próximo escenario.",
+  description: "Cuéntanos qué estás creando. Te responderemos con un layout, cronograma y cotización.",
+  ctaText: "Solicitar cotización",
+  ctaSecondary: "Descargar brochure",
+  formLabels: { name: "Nombre", email: "Email", company: "Empresa", eventType: "Tipo de Evento", message: "Mensaje" },
+  formPlaceholders: { name: "Tu nombre", email: "tu@email.com", company: "Tu empresa", eventType: "Concierto, evento corporativo, etc.", message: "Cuéntanos sobre tu proyecto..." },
+  contactLabels: { email: "Email", phone: "Teléfono", location: "Ubicación" },
+  successTitle: "¡Mensaje enviado!",
+  successMessage: "Te contactaremos pronto.",
+  sendingText: "Enviando...",
+  errorMessage: "Algo salió mal. Por favor escríbenos directamente a",
+};
+
+export const footerConfigEs: FooterConfig = {
+  ...footerConfig,
+  brandDescription: "Pantallas LED flexibles que transforman espacios. Soluciones visuales avanzadas para conciertos, eventos y experiencias de marca inmersivas.",
+  linkSections: [
+    { title: "Productos", links: ["Paneles LED", "Sistemas Curvos", "Serie Exterior", "Accesorios"] },
+    { title: "Servicios", links: ["Alquiler", "Instalación", "Soporte", "Capacitación"] },
+    { title: "Empresa", links: ["Nosotros", "Empleos", "Prensa", "Contacto"] },
+  ],
+  legalLinks: [
+    { label: "Política de Privacidad", href: "#" },
+    { label: "Términos de Servicio", href: "#" },
+  ],
+  copyrightText: "BLNK Display. Todos los derechos reservados.",
+};
+
+export const videoConfigEs: VideoConfig = {
+  ...videoConfig,
+  sectionLabel: "EN ACCIÓN",
+  headingMain: "Míralo",
+  headingAccent: "funcionar.",
+  description: "De paredes planas a cilindros curvos — sistemas BLNK Display desplegados en eventos, retail y exhibiciones.",
+  playLabel: "Reproducir",
+  pauseLabel: "Pausar",
+  muteLabel: "Silenciar",
+  unmuteLabel: "Activar sonido",
 };
