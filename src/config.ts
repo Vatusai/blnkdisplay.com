@@ -307,6 +307,7 @@ export interface ContactConfig {
   phone: string;
   whatsapp: string;
   location: string;
+  scriptUrl: string;
 }
 
 export const contactConfig: ContactConfig = {
@@ -319,6 +320,7 @@ export const contactConfig: ContactConfig = {
   phone: "+506 8338 4214",
   whatsapp: "50683384214",
   location: "San Jose, Costa Rica",
+  scriptUrl: "https://script.google.com/macros/s/AKfycbxC4Kg9DTM8HnZhBOLExpCM7PZcUz2F0HWgk5d8ZLiZvQLP6u61K_S-e4fzGCV0gLS5Gg/exec",
 };
 
 // ----------------------------------------------------------------------------

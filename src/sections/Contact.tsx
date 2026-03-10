@@ -24,6 +24,8 @@ const Contact = () => {
   });
 
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -86,20 +88,32 @@ const Contact = () => {
     };
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
-    // Reset form after 3 seconds
-    setTimeout(() => {
-      setSubmitted(false);
-      setFormData({
-        name: '',
-        email: '',
-        company: '',
-        eventType: '',
-        message: '',
+    setIsSubmitting(true);
+    setError(false);
+
+    try {
+      const response = await fetch(contactConfig.scriptUrl, {
+        method: 'POST',
+        body: JSON.stringify(formData),
       });
-    }, 3000);
+      const result = await response.json() as { result: string };
+
+      if (result.result === 'success') {
+        setSubmitted(true);
+        setTimeout(() => {
+          setSubmitted(false);
+          setFormData({ name: '', email: '', company: '', eventType: '', message: '' });
+        }, 4000);
+      } else {
+        setError(true);
+      }
+    } catch {
+      setError(true);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -281,12 +295,25 @@ const Contact = () => {
               <div className="form-field pt-4">
                 <Button
                   type="submit"
-                  className="w-full bg-pink text-black font-display font-bold text-sm uppercase tracking-wider h-14 hover:bg-pink-light transition-colors duration-300 rounded-none"
+                  disabled={isSubmitting}
+                  className="w-full bg-pink text-black font-display font-bold text-sm uppercase tracking-wider h-14 hover:bg-pink-light transition-colors duration-300 rounded-none disabled:opacity-60 disabled:cursor-not-allowed"
                   data-cursor-hover
                 >
-                  {contactConfig.ctaText}
-                  <ArrowRight className="w-4 h-4 ml-2" />
+                  {isSubmitting ? 'Sending...' : contactConfig.ctaText}
+                  {!isSubmitting && <ArrowRight className="w-4 h-4 ml-2" />}
                 </Button>
+
+                {error && (
+                  <p className="font-body text-sm text-red-400 text-center mt-4">
+                    Something went wrong. Please email us directly at{' '}
+                    <a
+                      href={`mailto:${contactConfig.email}`}
+                      className="underline hover:text-red-300 transition-colors"
+                    >
+                      {contactConfig.email}
+                    </a>
+                  </p>
+                )}
               </div>
             </form>
           </div>
