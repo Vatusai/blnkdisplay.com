@@ -1,285 +1,226 @@
 import { useEffect, useRef, useState } from 'react';
-import { gsap } from 'gsap';
+import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useTranslation } from 'react-i18next';
-import { Play, Music, Disc, Calendar, ChevronDown } from 'lucide-react';
-import LanguageToggle from '../components/LanguageToggle';
+import { ArrowDown } from 'lucide-react';
+import { heroConfig } from '../config';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const ICON_MAP = {
-  disc: Disc,
-  play: Play,
-  calendar: Calendar,
-  music: Music,
-};
-
-const NAV_ITEMS = [
-  { key: 'technology', icon: 'disc' as const },
-  { key: 'gallery', icon: 'play' as const },
-  { key: 'applications', icon: 'calendar' as const },
-  { key: 'contact', icon: 'music' as const },
-];
-
 const Hero = () => {
-  const { t, i18n } = useTranslation();
-  const heroRef = useRef<HTMLDivElement>(null);
-  const navRef = useRef<HTMLDivElement>(null);
-  const moduleRef = useRef<HTMLDivElement>(null);
-  const glintRef = useRef<HTMLDivElement>(null);
-  const titleRef = useRef<HTMLHeadingElement>(null);
-  const subtitleRef = useRef<HTMLParagraphElement>(null);
-  const ctaRef = useRef<HTMLDivElement>(null);
-  
-  const TARGET_TEXT = t('hero.decodeText');
-  const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()';
-  const [displayText, setDisplayText] = useState(' '.repeat(TARGET_TEXT.length));
-  const [isDecoding, setIsDecoding] = useState(true);
-  
-  // Update display text when language changes
+  const sectionRef = useRef<HTMLElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLDivElement>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const triggersRef = useRef<ScrollTrigger[]>([]);
+
   useEffect(() => {
-    setDisplayText(' '.repeat(TARGET_TEXT.length));
-    setIsDecoding(true);
-  }, [i18n.language, TARGET_TEXT]);
+    const section = sectionRef.current;
+    const grid = gridRef.current;
+    const title = titleRef.current;
+    if (!section || !grid || !title) return;
 
-  // Decode text effect
-  useEffect(() => {
-    let iteration = 0;
-    const maxIterations = TARGET_TEXT.length * 8;
+    // Set loaded state for initial animations
+    const loadTimer = setTimeout(() => setIsLoaded(true), 100);
 
-    const interval = setInterval(() => {
-      setDisplayText(() => {
-        return TARGET_TEXT.split('')
-          .map((_, index) => {
-            if (index < iteration / 8) {
-              return TARGET_TEXT[index];
-            }
-            return CHARS[Math.floor(Math.random() * CHARS.length)];
-          })
-          .join('');
-      });
+    // Get all grid cells
+    const cells = grid.querySelectorAll('.grid-cell');
+    const titleBlocks = title.querySelectorAll('.title-block');
 
-      iteration += 1;
+    // Initial entrance animation
+    const tl = gsap.timeline({ delay: 0.3 });
 
-      if (iteration >= maxIterations) {
-        clearInterval(interval);
-        setDisplayText(TARGET_TEXT);
-        setIsDecoding(false);
+    // Grid cells flip in with stagger
+    tl.fromTo(
+      cells,
+      {
+        rotateX: 90,
+        y: -100,
+        opacity: 0,
+      },
+      {
+        rotateX: 0,
+        y: 0,
+        opacity: 1,
+        duration: 1.2,
+        stagger: {
+          each: 0.05,
+          from: 'random',
+        },
+        ease: 'expo.out',
       }
-    }, 40);
+    );
 
-    return () => clearInterval(interval);
-  }, []);
+    // Title blocks decode animation
+    tl.fromTo(
+      titleBlocks,
+      {
+        scale: 0,
+        rotate: 180,
+        opacity: 0,
+      },
+      {
+        scale: 1,
+        rotate: 0,
+        opacity: 1,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: 'back.out(1.7)',
+      },
+      '-=0.5'
+    );
 
-  // GSAP animations - solo animaciones de entrada, sin scroll-driven exit
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Nav slide in
-      gsap.fromTo(
-        navRef.current,
-        { y: -100, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out', delay: 0.3 }
-      );
+    // Scroll-based parallax
+    const scrollTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 1,
+      },
+    });
 
-      // LED Module entrance
-      gsap.fromTo(
-        moduleRef.current,
-        { scale: 0.82, opacity: 0, y: '6vh' },
-        { scale: 1, opacity: 1, y: 0, duration: 0.9, ease: 'power2.out', delay: 0.2 }
-      );
+    scrollTl.to(grid, {
+      y: 150,
+      ease: 'none',
+    });
 
-      // Glint line entrance
-      gsap.fromTo(
-        glintRef.current,
-        { scaleY: 0 },
-        { scaleY: 1, duration: 0.7, ease: 'power2.out', delay: 0.5 }
-      );
+    scrollTl.to(
+      title,
+      {
+        x: -200,
+        ease: 'none',
+      },
+      0
+    );
 
-      // Subtitle fade in
-      gsap.fromTo(
-        subtitleRef.current,
-        { y: 30, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out', delay: 1.2 }
-      );
-
-      // CTA buttons fade in
-      gsap.fromTo(
-        ctaRef.current,
-        { y: 20, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.6, ease: 'power3.out', delay: 1.4 }
-      );
-
-      // NOTA: Eliminado el ScrollTrigger con pin y exit animation
-      // El Hero ahora es una sección estática que se scrollea naturalmente
-
-    }, heroRef);
-
-    return () => ctx.revert();
-  }, []);
-
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+    if (scrollTl.scrollTrigger) {
+      triggersRef.current.push(scrollTl.scrollTrigger);
     }
+
+    return () => {
+      clearTimeout(loadTimer);
+      triggersRef.current.forEach(trigger => trigger.kill());
+      triggersRef.current = [];
+    };
+  }, []);
+
+  if (!heroConfig.titleLine1 && !heroConfig.titleLine2) return null;
+
+  const rows = heroConfig.gridRows || 6;
+  const cols = heroConfig.gridCols || 8;
+
+  // Generate grid cells
+  const generateGridCells = () => {
+    const cells = [];
+
+    for (let row = 0; row < rows; row++) {
+      for (let col = 0; col < cols; col++) {
+        const isPink = heroConfig.pinkCells.some((p) => p.row === row && p.col === col);
+        const cellIndex = row * cols + col;
+
+        cells.push(
+          <div
+            key={cellIndex}
+            className={`grid-cell absolute preserve-3d backface-hidden transition-all duration-300 hover:scale-105 hover:z-10 ${
+              isPink ? 'bg-pink' : ''
+            }`}
+            style={{
+              left: `${(col / cols) * 100}%`,
+              top: `${(row / rows) * 100}%`,
+              width: `${100 / cols}%`,
+              height: `${100 / rows}%`,
+              backgroundImage: isPink ? 'none' : heroConfig.backgroundImage ? `url(${heroConfig.backgroundImage})` : 'none',
+              backgroundPosition: `${(col / (cols - 1)) * 100}% ${(row / (rows - 1)) * 100}%`,
+              backgroundSize: `${cols * 100}% ${rows * 100}%`,
+              transformOrigin: 'center center',
+            }}
+            data-cursor-hover
+          />
+        );
+      }
+    }
+    return cells;
   };
 
   return (
     <section
-      ref={heroRef}
-      className="relative w-full h-screen overflow-hidden bg-[#07070A]"
+      ref={sectionRef}
+      className="relative min-h-screen w-full bg-black overflow-hidden perspective-1000"
     >
-      {/* Background image */}
-      <div className="absolute inset-0 z-0">
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(/images/hero-glow.jpg)` }}
-        />
-        {/* Dark overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#07070A]/50 to-[#07070A]" />
-        {/* Vignette */}
-        <div className="vignette" />
+      {/* Grid container */}
+      <div
+        ref={gridRef}
+        className="absolute inset-0 preserve-3d"
+        style={{ transformStyle: 'preserve-3d' }}
+      >
+        {generateGridCells()}
       </div>
 
-      {/* Navigation pill */}
-      <nav
-        ref={navRef}
-        className="fixed top-6 left-1/2 -translate-x-1/2 z-50 nav-pill rounded-full px-2 py-2"
+      {/* Title overlay */}
+      <div
+        ref={titleRef}
+        className="absolute inset-0 flex items-center justify-center pointer-events-none z-20"
       >
-        <div className="flex items-center gap-1">
-          {NAV_ITEMS.map((item) => {
-            const IconComponent = ICON_MAP[item.icon];
-            const sectionId = item.key === 'technology' ? 'technology' : 
-                            item.key === 'gallery' ? 'gallery' : 
-                            item.key === 'applications' ? 'tour' : 'footer';
-            return (
-              <button
-                key={item.key}
-                onClick={() => scrollToSection(sectionId)}
-                className="flex items-center gap-2 px-4 py-2 text-xs font-mono-custom uppercase tracking-wider text-white/80 hover:text-[#00F0FF] transition-colors rounded-full hover:bg-white/5"
-              >
-                <IconComponent className="w-3.5 h-3.5" />
-                <span>{t(`nav.${item.key}`)}</span>
-              </button>
-            );
-          })}
-          <div className="w-px h-4 bg-white/20 mx-1" />
-          <LanguageToggle />
-        </div>
-      </nav>
-
-      {/* Hero content */}
-      <div className="relative z-10 flex flex-col items-center justify-center h-full px-4">
-        {/* Logo / Brand */}
-        <div className="absolute top-8 left-8">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full bg-[#00F0FF]/20 flex items-center justify-center">
-              <Disc className="w-4 h-4 text-[#00F0FF]" />
-            </div>
-            <span className="font-display text-lg text-white">{t('hero.brandName')}</span>
-          </div>
-        </div>
-
-        {/* LED Module */}
-        <div
-          ref={moduleRef}
-          className="relative w-[62vw] h-[38vh] md:w-[50vw] md:h-[32vh] led-module mb-8"
-        >
-          {/* Grid dots background */}
-          <div className="absolute inset-4 grid-dots rounded-[18px] opacity-50" />
-          
-          {/* Glint line */}
-          <div
-            ref={glintRef}
-            className="absolute left-1/2 top-0 glint-line origin-center"
-            style={{ transform: 'translateX(-50%)' }}
-          />
-
-          {/* Module content */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="text-center">
-              <p className="font-mono-custom text-xs text-[#00F0FF]/60 uppercase tracking-wider mb-2">
-                {t('hero.systemLabel')}
-              </p>
-              <div className="w-16 h-16 mx-auto rounded-full bg-[#00F0FF]/10 flex items-center justify-center glow-cyan">
-                <Zap className="w-8 h-8 text-[#00F0FF]" />
+        <div className="relative w-full max-w-6xl px-6">
+          {/* Title Line 1 */}
+          {heroConfig.titleLine1 && (
+            <div className="flex justify-start mb-4">
+              <div className="title-block bg-pink px-8 py-4 pointer-events-auto hover:scale-110 transition-transform duration-300">
+                <span className="font-display font-black text-6xl md:text-8xl lg:text-9xl text-black tracking-tighter">
+                  {heroConfig.titleLine1}
+                </span>
               </div>
             </div>
-          </div>
+          )}
+
+          {/* Title Line 2 */}
+          {heroConfig.titleLine2 && (
+            <div className="flex justify-end">
+              <div className="title-block bg-pink px-8 py-4 pointer-events-auto hover:scale-110 transition-transform duration-300">
+                <span className="font-display font-black text-6xl md:text-8xl lg:text-9xl text-black tracking-tighter">
+                  {heroConfig.titleLine2}
+                </span>
+              </div>
+            </div>
+          )}
         </div>
+      </div>
 
-        {/* Main title with decode effect */}
-        <h1
-          ref={titleRef}
-          className="decode-text text-[10vw] md:text-[8vw] lg:text-[6vw] font-bold text-white leading-none tracking-tighter mb-4 text-center"
-        >
-          <span className={`${isDecoding ? 'text-glow-cyan' : ''} transition-all duration-300`}>
-            {displayText}
-          </span>
-        </h1>
+      {/* Subtitle */}
+      {heroConfig.subtitle && (
+        <div className="absolute bottom-32 left-0 right-0 text-center z-20">
+          <p className="font-body text-white/60 text-sm md:text-base uppercase tracking-[0.3em]">
+            {heroConfig.subtitle}
+          </p>
+        </div>
+      )}
 
-        {/* Subtitle */}
-        <p
-          ref={subtitleRef}
-          className="font-mono-custom text-sm md:text-base text-[#A7B0C8] uppercase tracking-[0.3em] mb-10 text-center"
-        >
-          {t('hero.subtitle')}
-        </p>
-
-        {/* CTA Buttons */}
-        <div ref={ctaRef} className="flex flex-col sm:flex-row gap-4">
-          <button
-            onClick={() => scrollToSection('footer')}
-            className="btn-primary"
+      {/* CTA Button */}
+      {heroConfig.ctaText && (
+        <div className="absolute bottom-16 left-0 right-0 flex justify-center z-20">
+          <a
+            href={heroConfig.ctaHref || '#products'}
+            className="group flex items-center gap-3 px-8 py-4 border-2 border-pink text-pink font-display font-bold text-sm uppercase tracking-wider hover:bg-pink hover:text-black transition-all duration-300"
+            data-cursor-hover
           >
-            {t('hero.ctaPrimary')}
-          </button>
-          <button
-            onClick={() => scrollToSection('gallery')}
-            className="btn-secondary"
-          >
-            {t('hero.ctaSecondary')}
-          </button>
+            {heroConfig.ctaText}
+            <ArrowDown className="w-4 h-4 group-hover:translate-y-1 transition-transform duration-300" />
+          </a>
         </div>
-      </div>
+      )}
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10">
-        <div className="flex flex-col items-center gap-2 text-white/40">
-          <span className="font-mono-custom text-xs uppercase tracking-wider">{t('hero.scroll')}</span>
-          <ChevronDown className="w-5 h-5 animate-bounce" />
-        </div>
-      </div>
+      {/* Corner decorations */}
+      <div className="absolute top-24 left-6 w-16 h-16 border-l-2 border-t-2 border-pink/30 z-20" />
+      <div className="absolute bottom-24 right-6 w-16 h-16 border-r-2 border-b-2 border-pink/30 z-20" />
 
-      {/* Decorative elements */}
-      <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#00F0FF]/30 to-transparent" />
-
-      {/* Corner accents */}
-      <div className="absolute top-8 right-8 text-right">
-        <p className="font-mono-custom text-xs text-white/40 uppercase tracking-wider">{t('hero.cornerLabel')}</p>
-        <p className="font-mono-custom text-xs text-[#00F0FF]/60">{t('hero.cornerDetail')}</p>
-      </div>
-
-      {/* Corner lines */}
-      <div className="absolute top-8 left-8 w-20 h-px bg-gradient-to-r from-[#00F0FF]/50 to-transparent" />
-      <div className="absolute top-8 left-8 w-px h-20 bg-gradient-to-b from-[#00F0FF]/50 to-transparent" />
-      <div className="absolute bottom-8 right-8 w-20 h-px bg-gradient-to-l from-[#00F0FF]/30 to-transparent" />
-      <div className="absolute bottom-8 right-8 w-px h-20 bg-gradient-to-t from-[#00F0FF]/30 to-transparent" />
+      {/* Loading overlay */}
+      <div
+        className={`absolute inset-0 bg-black z-50 transition-opacity duration-700 pointer-events-none ${
+          isLoaded ? 'opacity-0' : 'opacity-100'
+        }`}
+      />
     </section>
   );
 };
-
-// Zap icon component
-const Zap = ({ className }: { className?: string }) => (
-  <svg 
-    className={className} 
-    fill="none" 
-    viewBox="0 0 24 24" 
-    stroke="currentColor"
-    strokeWidth={1.5}
-  >
-    <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
-  </svg>
-);
 
 export default Hero;

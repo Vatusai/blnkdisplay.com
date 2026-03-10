@@ -1,128 +1,96 @@
 import { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
+import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import './index.css';
-import './App.css';
-import useLenis from './hooks/useLenis';
-import { siteConfig } from './config';
 import Hero from './sections/Hero';
-import AlbumCube from './sections/AlbumCube';
-import ParallaxGallery from './sections/ParallaxGallery';
-import TourSchedule from './sections/TourSchedule';
+import ProductShowcase from './sections/ProductShowcase';
+import ColorPalette from './sections/ColorPalette';
+import Finale from './sections/Finale';
+import Applications from './sections/Applications';
 import Specs from './sections/Specs';
+import Workflow from './sections/Workflow';
+import Contact from './sections/Contact';
 import Footer from './sections/Footer';
+import Navigation from './components/Navigation';
+import CustomCursor from './components/CustomCursor';
+import WhatsAppButton from './components/WhatsAppButton';
 
 gsap.registerPlugin(ScrollTrigger);
 
 function App() {
-  const mainRef = useRef<HTMLElement>(null);
-  
-  // Initialize Lenis smooth scrolling
-  useLenis();
+  const mainRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Set page title from config
-    if (siteConfig.title) {
-      document.title = siteConfig.title;
-    }
-
-    // Add viewport meta for better mobile experience
-    const metaViewport = document.querySelector('meta[name="viewport"]');
-    if (metaViewport) {
-      metaViewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
-    }
-
-    // Wait for all ScrollTriggers to be created
-    const timer = setTimeout(() => {
-      // Solo considerar pinned sections que NO sean el Hero (ahora es flujo libre)
-      const pinned = ScrollTrigger.getAll()
-        .filter(st => {
-          const trigger = st.trigger;
-          const isHero = trigger?.classList?.contains('hero-section');
-          return st.vars.pin && !isHero;
-        })
-        .sort((a, b) => a.start - b.start);
-      
-      const maxScroll = ScrollTrigger.maxScroll(window);
-      
-      if (!maxScroll || pinned.length === 0) return;
-
-      // Build pinned ranges with settle ratios
-      const pinnedRanges = pinned.map(st => ({
-        start: st.start / maxScroll,
-        end: (st.end ?? st.start) / maxScroll,
-        center: (st.start + ((st.end ?? st.start) - st.start) * 0.5) / maxScroll,
-      }));
-
-      // Global snap configuration
-      ScrollTrigger.create({
-        snap: {
-          snapTo: (value: number) => {
-            // Check if within any pinned range (with buffer)
-            const inPinned = pinnedRanges.some(
-              r => value >= r.start - 0.02 && value <= r.end + 0.02
-            );
-            
-            if (!inPinned) return value; // Flowing section: free scroll
-
-            // Find nearest pinned center
-            const target = pinnedRanges.reduce(
-              (closest, r) =>
-                Math.abs(r.center - value) < Math.abs(closest - value)
-                  ? r.center
-                  : closest,
-              pinnedRanges[0]?.center ?? 0
-            );
-
-            return target;
-          },
-          duration: { min: 0.15, max: 0.4 },
-          delay: 0,
-          ease: 'power1.out',
-        },
-      });
-    }, 500);
-
+    // Velocity-based skew effect
+    let currentSkew = 0;
+    let targetSkew = 0;
+    
+    const updateSkew = () => {
+      currentSkew += (targetSkew - currentSkew) * 0.1;
+      if (mainRef.current) {
+        mainRef.current.style.transform = `skewY(${currentSkew}deg)`;
+      }
+      requestAnimationFrame(updateSkew);
+    };
+    
+    const handleScroll = () => {
+      const scrollSpeed = Math.abs(window.scrollY - (window as any).lastScrollY || 0);
+      targetSkew = Math.min(scrollSpeed * 0.02, 3);
+      (window as any).lastScrollY = window.scrollY;
+    };
+    
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    updateSkew();
+    
+    // Reset skew when scroll stops
+    let scrollTimeout: ReturnType<typeof setTimeout>;
+    const resetSkew = () => {
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        targetSkew = 0;
+      }, 100);
+    };
+    window.addEventListener('scroll', resetSkew, { passive: true });
+    
+    // Initialize ScrollTrigger refresh after all content loads
+    const refreshTimeout = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 100);
+    
     return () => {
-      clearTimeout(timer);
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('scroll', resetSkew);
+      clearTimeout(scrollTimeout);
+      clearTimeout(refreshTimeout);
     };
   }, []);
 
   return (
-    <main ref={mainRef} className="relative w-full min-h-screen bg-[#07070A] overflow-x-hidden">
+    <div className="relative bg-black min-h-screen overflow-x-hidden">
       {/* Grain overlay */}
       <div className="grain-overlay" />
+      
+      {/* Custom cursor */}
+      <CustomCursor />
 
-      {/* Hero Section - Immersive landing with LED module */}
-      <div className="hero-section">
+      {/* WhatsApp floating button */}
+      <WhatsAppButton />
+
+      {/* Navigation */}
+      <Navigation />
+      
+      {/* Main content */}
+      <main ref={mainRef} className="relative transition-transform duration-100 ease-out will-change-transform">
         <Hero />
-      </div>
-
-      {/* Album Cube Section - 3D Technology showcase */}
-      <div className="technology-section pinned-section">
-        <AlbumCube />
-      </div>
-
-      {/* Parallax Gallery Section */}
-      <div className="gallery-section">
-        <ParallaxGallery />
-      </div>
-
-      {/* Tour Schedule / Applications Section */}
-      <div className="applications-section">
-        <TourSchedule />
-      </div>
-
-      {/* Specs & Contact Form Section */}
-      <div className="specs-section">
+        <ProductShowcase />
+        <ColorPalette />
+        <Finale />
+        <Applications />
         <Specs />
-      </div>
-
-      {/* Footer Section */}
-      <div className="contact-section">
+        <Workflow />
+        <Contact />
         <Footer />
-      </div>
-    </main>
+      </main>
+    </div>
   );
 }
 

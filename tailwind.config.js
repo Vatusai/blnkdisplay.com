@@ -10,6 +10,11 @@ module.exports = {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        pink: {
+          DEFAULT: "#00F0FF",
+          dark: "#00C4D1",
+          light: "#5DFFFF",
+        },
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
@@ -38,20 +43,10 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        // Custom theme colors
-        void: {
-          black: '#050508',
-          dark: '#0A0A0F',
-        },
-        neon: {
-          cyan: '#00D4FF',
-          blue: '#4D9FFF',
-          soft: '#9DC4FF',
-        },
       },
       fontFamily: {
-        display: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
-        mono: ['JetBrains Mono', 'SF Mono', 'Monaco', 'monospace'],
+        display: ['Montserrat', 'sans-serif'],
+        body: ['Open Sans', 'sans-serif'],
       },
       borderRadius: {
         xl: "calc(var(--radius) + 4px)",
@@ -62,8 +57,8 @@ module.exports = {
       },
       boxShadow: {
         xs: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
-        glow: "0 0 20px rgba(0, 212, 255, 0.3)",
-        'glow-lg': "0 0 40px rgba(0, 212, 255, 0.4)",
+        pink: "0 0 40px rgba(255, 115, 195, 0.4)",
+        "pink-lg": "0 0 60px rgba(255, 115, 195, 0.6)",
       },
       keyframes: {
         "accordion-down": {
@@ -78,45 +73,57 @@ module.exports = {
           "0%,70%,100%": { opacity: "1" },
           "20%,50%": { opacity: "0" },
         },
-        "marquee": {
-          "0%": { transform: "translateX(0)" },
-          "100%": { transform: "translateX(-50%)" },
+        "pulse-pink": {
+          "0%, 100%": { transform: "scale(1)" },
+          "50%": { transform: "scale(1.05)" },
         },
-        "spin-slow": {
-          "0%": { transform: "rotate(0deg)" },
-          "100%": { transform: "rotate(360deg)" },
+        "breathe": {
+          "0%, 100%": { transform: "scale(1)" },
+          "50%": { transform: "scale(1.02)" },
         },
         "float": {
           "0%, 100%": { transform: "translateY(0)" },
-          "50%": { transform: "translateY(-10px)" },
+          "50%": { transform: "translateY(-20px)" },
         },
-        "pulse-glow": {
-          "0%, 100%": { opacity: "1", boxShadow: "0 0 20px rgba(0, 212, 255, 0.3)" },
-          "50%": { opacity: "0.8", boxShadow: "0 0 40px rgba(0, 212, 255, 0.5)" },
+        "flip-in": {
+          from: { 
+            opacity: "0",
+            transform: "rotateX(90deg) translateY(-100px)"
+          },
+          to: { 
+            opacity: "1",
+            transform: "rotateX(0) translateY(0)"
+          },
         },
-        "slide-in": {
-          "0%": { transform: "translateY(-100%)", opacity: "0" },
-          "100%": { transform: "translateY(0)", opacity: "1" },
+        "slide-up": {
+          from: { 
+            opacity: "0",
+            transform: "translateY(60px)"
+          },
+          to: { 
+            opacity: "1",
+            transform: "translateY(0)"
+          },
         },
-        "fade-up": {
-          "0%": { transform: "translateY(20px)", opacity: "0" },
-          "100%": { transform: "translateY(0)", opacity: "1" },
+        "grid-line-draw": {
+          from: { strokeDashoffset: "100%" },
+          to: { strokeDashoffset: "0%" },
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "caret-blink": "caret-blink 1.25s ease-out infinite",
-        "marquee": "marquee 20s linear infinite",
-        "spin-slow": "spin-slow 4s linear infinite",
+        "pulse-pink": "pulse-pink 4s ease-in-out infinite",
+        "breathe": "breathe 10s ease-in-out infinite",
         "float": "float 3s ease-in-out infinite",
-        "pulse-glow": "pulse-glow 2s ease-in-out infinite",
-        "slide-in": "slide-in 0.6s cubic-bezier(0.16, 1, 0.3, 1)",
-        "fade-up": "fade-up 0.5s ease-out",
+        "flip-in": "flip-in 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards",
+        "slide-up": "slide-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards",
+        "grid-line-draw": "grid-line-draw 1s ease-out forwards",
       },
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+      transitionTimingFunction: {
+        "custom-expo": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "elastic-snap": "cubic-bezier(0.68, -0.6, 0.32, 1.6)",
       },
     },
   },

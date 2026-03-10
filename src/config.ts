@@ -1,10 +1,388 @@
-// =============================================================================
-// BLNK display - Site Configuration
-// Edit ONLY this file to customize all content across the site.
-// All animations, layouts, and styles are controlled by the components.
-// =============================================================================
+// ============================================================================
+// BLNK DISPLAY - SITE CONFIGURATION
+// ============================================================================
+// Flexible LED Display Rentals & Advanced Visual Technology
+// ============================================================================
 
-// -- Site-wide settings -------------------------------------------------------
+// ----------------------------------------------------------------------------
+// Navigation
+// ----------------------------------------------------------------------------
+
+export interface NavLink {
+  label: string;
+  href: string;
+}
+
+export interface NavigationConfig {
+  logo: string;
+  logoAccent: string;
+  navLinks: NavLink[];
+  ctaText: string;
+}
+
+export const navigationConfig: NavigationConfig = {
+  logo: "BLNK",
+  logoAccent: "",
+  navLinks: [
+    { label: "Products", href: "#products" },
+    { label: "Projects", href: "#projects" },
+    { label: "Support", href: "#support" },
+    { label: "Contact", href: "#contact" },
+  ],
+  ctaText: "Request a quote",
+};
+
+// ----------------------------------------------------------------------------
+// Hero Section
+// ----------------------------------------------------------------------------
+
+export interface HeroConfig {
+  titleLine1: string;
+  titleLine2: string;
+  subtitle: string;
+  ctaText: string;
+  ctaHref: string;
+  backgroundImage: string;
+  gridRows: number;
+  gridCols: number;
+  pinkCells: { row: number; col: number }[];
+}
+
+export const heroConfig: HeroConfig = {
+  titleLine1: "FLEXIBLE",
+  titleLine2: "LED WALL",
+  subtitle: "BLNK DISPLAY SYSTEM",
+  ctaText: "Explore the system",
+  ctaHref: "#products",
+  backgroundImage: "/images/hero_concert_led.jpg",
+  gridRows: 6,
+  gridCols: 8,
+  pinkCells: [
+    { row: 0, col: 4 }, { row: 0, col: 5 }, { row: 0, col: 6 }, { row: 0, col: 7 },
+    { row: 1, col: 4 }, { row: 1, col: 5 }, { row: 1, col: 6 }, { row: 1, col: 7 },
+    { row: 2, col: 4 }, { row: 2, col: 5 }, { row: 2, col: 6 }, { row: 2, col: 7 },
+    { row: 3, col: 4 }, { row: 3, col: 5 }, { row: 3, col: 6 }, { row: 3, col: 7 },
+  ],
+};
+
+// ----------------------------------------------------------------------------
+// Product Showcase Section (Precision Panel)
+// ----------------------------------------------------------------------------
+
+export interface ProductFeature {
+  value: string;
+  label: string;
+}
+
+export interface ProductShowcaseConfig {
+  sectionLabel: string;
+  headingMain: string;
+  headingAccent: string;
+  productName: string;
+  description: string;
+  price: string;
+  features: ProductFeature[];
+  colorSwatches: string[];
+  colorSwatchesLabel: string;
+  ctaText: string;
+  productImage: string;
+  productImageAlt: string;
+  decorativeText: string;
+}
+
+export const productShowcaseConfig: ProductShowcaseConfig = {
+  sectionLabel: "MODULAR HARDWARE",
+  headingMain: "Precision panel.",
+  headingAccent: "Instant control.",
+  productName: "BLNK Pro Series",
+  description: "Rigging, signal, and power—integrated. Map content in minutes, not hours. Our modular LED panels are engineered for rapid deployment and stunning visual impact.",
+  price: "",
+  features: [
+    { value: "2.6mm", label: "Pixel Pitch" },
+    { value: "4500", label: "Nits Brightness" },
+    { value: "7680Hz", label: "Refresh Rate" },
+  ],
+  colorSwatches: ["#FF2D8F", "#00D4FF", "#FFFFFF"],
+  colorSwatchesLabel: "Available configurations",
+  ctaText: "See specs",
+  productImage: "/images/product_panel_detail.jpg",
+  productImageAlt: "BLNK LED Panel Detail",
+  decorativeText: "PRECISION",
+};
+
+// ----------------------------------------------------------------------------
+// Color Palette Section (Stage Geometry / Curved)
+// ----------------------------------------------------------------------------
+
+export interface ColorSwatch {
+  name: string;
+  nameSecondary: string;
+  color: string;
+  description: string;
+}
+
+export interface ColorPaletteConfig {
+  sectionLabel: string;
+  headingMain: string;
+  headingAccent: string;
+  colors: ColorSwatch[];
+  bottomText: string;
+  decorativeText: string;
+}
+
+export const colorPaletteConfig: ColorPaletteConfig = {
+  sectionLabel: "STAGE GEOMETRY",
+  headingMain: "Curve",
+  headingAccent: "the moment.",
+  colors: [
+    { name: "Concave", nameSecondary: "Inward curve", color: "#FF2D8F", description: "Immersive audience experience" },
+    { name: "Convex", nameSecondary: "Outward curve", color: "#00D4FF", description: "Maximum viewing angles" },
+    { name: "Flat", nameSecondary: "Standard", color: "#FFFFFF", description: "Classic presentation" },
+    { name: "Custom", nameSecondary: "Your vision", color: "#1A1A1A", description: "Any shape imaginable" },
+  ],
+  bottomText: "Fast rigging. Zero visible seams.",
+  decorativeText: "CURVE",
+};
+
+// ----------------------------------------------------------------------------
+// Finale / Brand Philosophy Section (Build Any Canvas)
+// ----------------------------------------------------------------------------
+
+export interface FinaleConfig {
+  sectionLabel: string;
+  headingMain: string;
+  headingAccent: string;
+  tagline: string;
+  features: string[];
+  ctaText: string;
+  ctaHref: string;
+  image: string;
+  imageAlt: string;
+  decorativeText: string;
+}
+
+export const finaleConfig: FinaleConfig = {
+  sectionLabel: "MODULAR SYSTEM",
+  headingMain: "Build",
+  headingAccent: "any canvas.",
+  tagline: "Stack, hang, or floor-mount. One system—arenas, galleries, pop-ups. From intimate brand activations to stadium-scale concerts, BLNK Display transforms any space into an immersive visual experience.",
+  features: ["Rapid Deployment", "Tool-Free Rigging", "24/7 Support"],
+  ctaText: "Explore layouts",
+  ctaHref: "#contact",
+  image: "/images/modular_stack_rigging.jpg",
+  imageAlt: "Modular LED System",
+  decorativeText: "BUILD",
+};
+
+// ----------------------------------------------------------------------------
+// Applications Section
+// ----------------------------------------------------------------------------
+
+export interface Application {
+  title: string;
+  description: string;
+  image: string;
+}
+
+export interface ApplicationsConfig {
+  sectionLabel: string;
+  headingMain: string;
+  headingAccent: string;
+  applications: Application[];
+  decorativeText?: string;
+}
+
+export const applicationsConfig: ApplicationsConfig = {
+  sectionLabel: "APPLICATIONS",
+  headingMain: "Any event.",
+  headingAccent: "Any scale.",
+  applications: [
+    {
+      title: "Concerts & Live Shows",
+      description: "Stunning visuals that amplify every performance",
+      image: "/images/hero_concert_led.jpg",
+    },
+    {
+      title: "Corporate Events",
+      description: "Professional displays for presentations and launches",
+      image: "/images/curved_stage_install.jpg",
+    },
+    {
+      title: "Brand Activations",
+      description: "Immersive experiences that captivate audiences",
+      image: "/images/immersive_room_experience.jpg",
+    },
+    {
+      title: "Outdoor & Touring",
+      description: "Weather-rated systems for festivals and tours",
+      image: "/images/outdoor_tour_truck.jpg",
+    },
+  ],
+};
+
+// ----------------------------------------------------------------------------
+// Specs Section
+// ----------------------------------------------------------------------------
+
+export interface SpecCard {
+  title: string;
+  value: string;
+  description: string;
+}
+
+export interface SpecsConfig {
+  sectionLabel: string;
+  headingMain: string;
+  description: string;
+  specs: SpecCard[];
+}
+
+export const specsConfig: SpecsConfig = {
+  sectionLabel: "SPECIFICATIONS",
+  headingMain: "Specs that stay out of the way.",
+  description: "We optimize for rigging speed, cable cleanliness, and image stability—so your team can focus on the show.",
+  specs: [
+    { title: "Pitch", value: "2.6mm / 3.9mm / 4.8mm", description: "Pixel-perfect clarity at any viewing distance" },
+    { title: "Brightness", value: "800–4500 nits", description: "From indoor venues to direct sunlight" },
+    { title: "Refresh", value: "1920–7680 Hz", description: "Camera-safe, flicker-free performance" },
+  ],
+};
+
+// ----------------------------------------------------------------------------
+// Workflow Section
+// ----------------------------------------------------------------------------
+
+export interface WorkflowStep {
+  number: string;
+  title: string;
+  description: string;
+}
+
+export interface WorkflowConfig {
+  sectionLabel: string;
+  headingMain: string;
+  steps: WorkflowStep[];
+}
+
+export const workflowConfig: WorkflowConfig = {
+  sectionLabel: "PROCESS",
+  headingMain: "From sketch to show.",
+  steps: [
+    {
+      number: "01",
+      title: "Layout",
+      description: "Send dimensions + content type. We recommend pitch, curve, and rigging.",
+    },
+    {
+      number: "02",
+      title: "Build",
+      description: "Pre-configured batches, labeled cables, and a single point of contact.",
+    },
+    {
+      number: "03",
+      title: "Support",
+      description: "On-site techs, real-time monitoring, and rapid swap kits.",
+    },
+  ],
+};
+
+// ----------------------------------------------------------------------------
+// Contact Section
+// ----------------------------------------------------------------------------
+
+export interface ContactConfig {
+  sectionLabel: string;
+  headingMain: string;
+  description: string;
+  ctaText: string;
+  ctaSecondary: string;
+  email: string;
+  phone: string;
+  whatsapp: string;
+  location: string;
+}
+
+export const contactConfig: ContactConfig = {
+  sectionLabel: "CONTACT",
+  headingMain: "Let's build your next stage.",
+  description: "Tell us what you're making. We'll reply with a layout, timeline, and quote.",
+  ctaText: "Request a quote",
+  ctaSecondary: "Download brochure",
+  email: "info@blnkdisplay.com",
+  phone: "+506 8338 4214",
+  whatsapp: "50683384214",
+  location: "San Jose, Costa Rica",
+};
+
+// ----------------------------------------------------------------------------
+// Footer
+// ----------------------------------------------------------------------------
+
+export interface SocialLink {
+  platform: "instagram" | "twitter" | "youtube";
+  href: string;
+  label: string;
+}
+
+export interface FooterLinkSection {
+  title: string;
+  links: string[];
+}
+
+export interface ContactInfo {
+  address: string;
+  phone: string;
+  email: string;
+}
+
+export interface LegalLink {
+  label: string;
+  href: string;
+}
+
+export interface FooterConfig {
+  logo: string;
+  logoAccent: string;
+  brandDescription: string;
+  socialLinks: SocialLink[];
+  linkSections: FooterLinkSection[];
+  contact: ContactInfo;
+  legalLinks: LegalLink[];
+  copyrightText: string;
+  decorativeText: string;
+}
+
+export const footerConfig: FooterConfig = {
+  logo: "BLNK",
+  logoAccent: "",
+  brandDescription: "Flexible LED displays that transform spaces. Advanced visual solutions for concerts, events, and immersive brand experiences.",
+  socialLinks: [
+    { platform: "instagram", href: "#", label: "Instagram" },
+    { platform: "twitter", href: "#", label: "Twitter" },
+    { platform: "youtube", href: "#", label: "YouTube" },
+  ],
+  linkSections: [
+    { title: "Products", links: ["LED Panels", "Curved Systems", "Outdoor Series", "Accessories"] },
+    { title: "Services", links: ["Rental", "Installation", "Support", "Training"] },
+    { title: "Company", links: ["About", "Careers", "Press", "Contact"] },
+  ],
+  contact: {
+    address: "San Jose, Costa Rica",
+    phone: "+506 8338 4214",
+    email: "info@blnkdisplay.com",
+  },
+  legalLinks: [
+    { label: "Privacy Policy", href: "#" },
+    { label: "Terms of Service", href: "#" },
+  ],
+  copyrightText: "BLNK Display. All rights reserved.",
+  decorativeText: "BLNK",
+};
+
+// ----------------------------------------------------------------------------
+// Site Metadata
+// ----------------------------------------------------------------------------
+
 export interface SiteConfig {
   title: string;
   description: string;
@@ -12,327 +390,7 @@ export interface SiteConfig {
 }
 
 export const siteConfig: SiteConfig = {
-  title: "BLNK display | Flexible LED Display Rentals",
-  description: "Advanced visual display solutions for concerts, events, exhibitions, and immersive brand experiences. Modular LED panels with tool-free assembly.",
+  title: "BLNK Display | Flexible LED Display Rentals",
+  description: "Advanced visual display solutions for concerts, events, exhibitions, and immersive brand experiences. Flexible LED displays that transform spaces.",
   language: "en",
-};
-
-// -- Hero Section -------------------------------------------------------------
-export interface HeroNavItem {
-  label: string;
-  sectionId: string;
-  icon: "disc" | "play" | "calendar" | "music";
-}
-
-export interface HeroConfig {
-  backgroundImage: string;
-  brandName: string;
-  decodeText: string;
-  decodeChars: string;
-  subtitle: string;
-  ctaPrimary: string;
-  ctaPrimaryTarget: string;
-  ctaSecondary: string;
-  ctaSecondaryTarget: string;
-  cornerLabel: string;
-  cornerDetail: string;
-  navItems: HeroNavItem[];
-}
-
-export const heroConfig: HeroConfig = {
-  backgroundImage: "/images/hero-glow.jpg",
-  brandName: "BLNK",
-  decodeText: "Build the impossible wall.",
-  decodeChars: "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*",
-  subtitle: "Modular LED panels. Tool-free assembly. Cinematic brightness.",
-  ctaPrimary: "Request a Quote",
-  ctaPrimaryTarget: "contact",
-  ctaSecondary: "See Showcase",
-  ctaSecondaryTarget: "gallery",
-  cornerLabel: "BLNK display SYSTEM",
-  cornerDetail: "Rental • Install • Global",
-  navItems: [
-    { label: "Technology", sectionId: "technology", icon: "disc" },
-    { label: "Gallery", sectionId: "gallery", icon: "play" },
-    { label: "Applications", sectionId: "applications", icon: "calendar" },
-    { label: "Contact", sectionId: "contact", icon: "music" },
-  ],
-};
-
-// -- Album Cube Section (Technology Cube) -------------------------------------------------------
-export interface Album {
-  id: number;
-  title: string;
-  subtitle: string;
-  image: string;
-}
-
-export interface AlbumCubeConfig {
-  albums: Album[];
-  cubeTextures: string[];
-  scrollHint: string;
-}
-
-export const albumCubeConfig: AlbumCubeConfig = {
-  albums: [
-    {
-      id: 1,
-      title: "FLEXIBLE",
-      subtitle: "CURVE",
-      image: "/images/cube-panel-2.jpg",
-    },
-    {
-      id: 2,
-      title: "MODULAR",
-      subtitle: "BUILD",
-      image: "/images/cube-panel-1.jpg",
-    },
-    {
-      id: 3,
-      title: "SEAMLESS",
-      subtitle: "CONNECT",
-      image: "/images/cube-panel-3.jpg",
-    },
-    {
-      id: 4,
-      title: "IMMERSIVE",
-      subtitle: "EXPERIENCE",
-      image: "/images/cube-panel-6.jpg",
-    },
-  ],
-  cubeTextures: [
-    "/images/cube-panel-1.jpg",
-    "/images/cube-panel-2.jpg",
-    "/images/cube-panel-3.jpg",
-    "/images/cube-panel-4.jpg",
-    "/images/cube-panel-5.jpg",
-    "/images/cube-panel-6.jpg",
-  ],
-  scrollHint: "Scroll to explore technology",
-};
-
-// -- Parallax Gallery Section -------------------------------------------------
-export interface ParallaxImage {
-  id: number;
-  src: string;
-  alt: string;
-}
-
-export interface GalleryImage {
-  id: number;
-  src: string;
-  title: string;
-  date: string;
-}
-
-export interface ParallaxGalleryConfig {
-  sectionLabel: string;
-  sectionTitle: string;
-  galleryLabel: string;
-  galleryTitle: string;
-  marqueeTexts: string[];
-  endCtaText: string;
-  parallaxImagesTop: ParallaxImage[];
-  parallaxImagesBottom: ParallaxImage[];
-  galleryImages: GalleryImage[];
-}
-
-export const parallaxGalleryConfig: ParallaxGalleryConfig = {
-  sectionLabel: "SURFACE MODE",
-  sectionTitle: "Turn the wall into a window.",
-  galleryLabel: "PROJECT GALLERY",
-  galleryTitle: "Built for any stage.",
-  marqueeTexts: [
-    "LIVE EVENTS",
-    "CORPORATE",
-    "BRAND ACTIVATIONS",
-    "ARCHITECTURE",
-    "CONCERTS",
-    "EXHIBITIONS",
-    "IMMERSIVE",
-    "FESTIVALS",
-  ],
-  endCtaText: "View All Projects",
-  parallaxImagesTop: [
-    { id: 1, src: "/images/gallery-1.jpg", alt: "Music festival stage" },
-    { id: 2, src: "/images/gallery-2.jpg", alt: "Trade show booth" },
-    { id: 3, src: "/images/gallery-3.jpg", alt: "Brand activation" },
-  ],
-  parallaxImagesBottom: [
-    { id: 4, src: "/images/gallery-4.jpg", alt: "Outdoor concert" },
-    { id: 5, src: "/images/gallery-5.jpg", alt: "Corporate conference" },
-    { id: 6, src: "/images/gallery-6.jpg", alt: "Art installation" },
-  ],
-  galleryImages: [
-    { id: 1, src: "/images/usecase-live-events.jpg", title: "Live Events", date: "Concert & Festival Production" },
-    { id: 2, src: "/images/usecase-retail.jpg", title: "Retail Spaces", date: "Brand Experience Centers" },
-    { id: 3, src: "/images/usecase-architecture.jpg", title: "Architecture", date: "Permanent Installations" },
-    { id: 4, src: "/images/stage-moment.jpg", title: "Stage Design", date: "Tour & Venue Production" },
-    { id: 5, src: "/images/gallery-1.jpg", title: "Festivals", date: "Large Scale Events" },
-    { id: 6, src: "/images/gallery-6.jpg", title: "Immersive", date: "Interactive Experiences" },
-  ],
-};
-
-// -- Tour Schedule Section (Applications) ----------------------------------------------------
-export interface TourDate {
-  id: number;
-  date: string;
-  time: string;
-  city: string;
-  venue: string;
-  status: "on-sale" | "sold-out" | "coming-soon";
-  image: string;
-}
-
-export interface TourStatusLabels {
-  onSale: string;
-  soldOut: string;
-  comingSoon: string;
-  default: string;
-}
-
-export interface TourScheduleConfig {
-  sectionLabel: string;
-  sectionTitle: string;
-  vinylImage: string;
-  buyButtonText: string;
-  detailsButtonText: string;
-  bottomNote: string;
-  bottomCtaText: string;
-  statusLabels: TourStatusLabels;
-  tourDates: TourDate[];
-}
-
-export const tourScheduleConfig: TourScheduleConfig = {
-  sectionLabel: "APPLICATIONS",
-  sectionTitle: "Where BLNK comes alive.",
-  vinylImage: "/images/cube-panel-1.jpg",
-  buyButtonText: "Learn More",
-  detailsButtonText: "View Specs",
-  bottomNote: "Custom solutions for any venue size",
-  bottomCtaText: "Get a Custom Quote",
-  statusLabels: {
-    onSale: "Available",
-    soldOut: "Booked",
-    comingSoon: "Coming Soon",
-    default: "Inquire",
-  },
-  tourDates: [
-    {
-      id: 1,
-      date: "2026.03.15",
-      time: "LIVE",
-      city: "Concert Tours",
-      venue: "Arena & Stadium Production",
-      status: "on-sale",
-      image: "/images/gallery-1.jpg",
-    },
-    {
-      id: 2,
-      date: "2026.04.01",
-      time: "EVENT",
-      city: "Corporate Events",
-      venue: "Conferences & Product Launches",
-      status: "on-sale",
-      image: "/images/gallery-5.jpg",
-    },
-    {
-      id: 3,
-      date: "2026.05.20",
-      time: "TRADE",
-      city: "Exhibitions",
-      venue: "Trade Shows & Expo Booths",
-      status: "on-sale",
-      image: "/images/gallery-2.jpg",
-    },
-    {
-      id: 4,
-      date: "2026.06.10",
-      time: "BRAND",
-      city: "Brand Activations",
-      venue: "Pop-up Experiences & Campaigns",
-      status: "coming-soon",
-      image: "/images/gallery-3.jpg",
-    },
-  ],
-};
-
-// -- Footer Section -----------------------------------------------------------
-export interface FooterImage {
-  id: number;
-  src: string;
-}
-
-export interface SocialLink {
-  icon: "instagram" | "twitter" | "youtube" | "music";
-  label: string;
-  href: string;
-}
-
-export interface FooterConfig {
-  portraitImage: string;
-  portraitAlt: string;
-  heroTitle: string;
-  heroSubtitle: string;
-  artistLabel: string;
-  artistName: string;
-  artistSubtitle: string;
-  brandName: string;
-  brandDescription: string;
-  quickLinksTitle: string;
-  quickLinks: string[];
-  contactTitle: string;
-  emailLabel: string;
-  email: string;
-  phoneLabel: string;
-  phone: string;
-  addressLabel: string;
-  address: string;
-  newsletterTitle: string;
-  newsletterDescription: string;
-  newsletterButtonText: string;
-  subscribeAlertMessage: string;
-  copyrightText: string;
-  bottomLinks: string[];
-  socialLinks: SocialLink[];
-  galleryImages: FooterImage[];
-}
-
-export const footerConfig: FooterConfig = {
-  portraitImage: "/images/footer-portrait.jpg",
-  portraitAlt: "BLNK display Technician",
-  heroTitle: "Ready to build your wall?",
-  heroSubtitle: "Tell us the date, venue, and size. We'll reply with a plan and a quote.",
-  artistLabel: "TECHNOLOGY",
-  artistName: "BLNK display",
-  artistSubtitle: "Modular LED Systems",
-  brandName: "BLNK",
-  brandDescription: "Advanced visual display solutions for concerts, events, exhibitions, and immersive brand experiences. Built for teardown, travel, and reinstall.",
-  quickLinksTitle: "Quick Links",
-  quickLinks: ["Technology", "Gallery", "Applications", "Specs", "Contact"],
-  contactTitle: "Contact",
-  emailLabel: "Email",
-  email: "info@blinkdisplay.com",
-  phoneLabel: "Phone",
-  phone: "+506 XXXX-XXXX",
-  addressLabel: "Address",
-  address: "XXXXX, San Jose, Costa Rica",
-  newsletterTitle: "Stay Updated",
-  newsletterDescription: "Get the latest on new products and project showcases.",
-  newsletterButtonText: "Subscribe",
-  subscribeAlertMessage: "Thanks for subscribing!",
-  copyrightText: "© 2026 BLNK display. All rights reserved.",
-  bottomLinks: ["Privacy Policy", "Terms of Service", "Careers"],
-  socialLinks: [
-    { icon: "instagram", label: "Instagram", href: "#" },
-    { icon: "twitter", label: "Twitter", href: "#" },
-    { icon: "youtube", label: "YouTube", href: "#" },
-    { icon: "music", label: "LinkedIn", href: "#" },
-  ],
-  galleryImages: [
-    { id: 1, src: "/images/gallery-1.jpg" },
-    { id: 2, src: "/images/gallery-2.jpg" },
-    { id: 3, src: "/images/gallery-3.jpg" },
-    { id: 4, src: "/images/gallery-4.jpg" },
-  ],
 };
