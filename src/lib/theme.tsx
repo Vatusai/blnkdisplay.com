@@ -12,6 +12,8 @@ import React, { createContext, useContext, useEffect, useState, useCallback } fr
 // =============================================================================
 
 export const THEME_STORAGE_KEY = 'blnk-accent-color';
+export const RECENT_COLORS_KEY = 'blnk-recent-colors';
+export const MAX_RECENT_COLORS = 4;
 
 export const DEFAULT_ACCENT_COLOR = '#0D9488';
 
@@ -195,6 +197,77 @@ export function saveAccentColor(color: string): void {
 /**
  * Load accent color from localStorage
  */
+
+// =============================================================================
+// RECENT COLORS HISTORY
+// =============================================================================
+
+/**
+ * Get recent colors from localStorage
+ * Returns array of hex colors (newest first)
+ */
+export function getRecentColors(): string[] {
+  try {
+    const stored = localStorage.getItem(RECENT_COLORS_KEY);
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      if (Array.isArray(parsed)) {
+        return parsed;
+      }
+    }
+  } catch (e) {
+    console.warn('Failed to load recent colors:', e);
+  }
+  return [];
+}
+
+/**
+ * Save recent colors to localStorage
+ */
+export function saveRecentColors(colors: string[]): void {
+  try {
+    localStorage.setItem(RECENT_COLORS_KEY, JSON.stringify(colors));
+  } catch (e) {
+    console.warn('Failed to save recent colors:', e);
+  }
+}
+
+/**
+ * Add a color to recent colors history
+ * - Moves to front if already exists
+ * - Adds to front if new
+ * - Keeps only MAX_RECENT_COLORS items
+ * - Returns the updated array
+ */
+export function addToRecentColors(color: string): string[] {
+  const current = getRecentColors();
+  const normalizedColor = color.toUpperCase();
+  
+  // Remove if already exists (to move it to front)
+  const filtered = current.filter(c => c.toUpperCase() !== normalizedColor);
+  
+  // Add to front
+  const updated = [normalizedColor, ...filtered];
+  
+  // Keep only max amount
+  const trimmed = updated.slice(0, MAX_RECENT_COLORS);
+  
+  // Save to storage
+  saveRecentColors(trimmed);
+  
+  return trimmed;
+}
+
+/**
+ * Clear recent colors history
+ */
+export function clearRecentColors(): void {
+  try {
+    localStorage.removeItem(RECENT_COLORS_KEY);
+  } catch (e) {
+    console.warn('Failed to clear recent colors:', e);
+  }
+}
 export function loadAccentColor(): string | null {
   try {
     return localStorage.getItem(THEME_STORAGE_KEY);
@@ -224,6 +297,8 @@ export interface ThemeContextValue {
   setAccentColor: (color: string) => void;
   resetToDefault: () => void;
   themeColors: ThemeColors;
+  recentColors: string[];
+  clearRecentColors: () => void;
 }
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
@@ -243,13 +318,16 @@ interface ThemeProviderProps {
 
 export function ThemeProvider({ children, defaultColor = DEFAULT_ACCENT_COLOR }: ThemeProviderProps) {
   const [accentColor, setAccentColorState] = useState(defaultColor);
+  const [recentColors, setRecentColors] = useState<string[]>([]);
   
-  // Load saved color on mount
+  // Load saved color and recent colors on mount
   useEffect(() => {
     const saved = loadAccentColor();
     if (saved) {
       setAccentColorState(saved);
     }
+    // Load recent colors
+    setRecentColors(getRecentColors());
   }, []);
   
   // Apply colors whenever accentColor changes
@@ -261,6 +339,9 @@ export function ThemeProvider({ children, defaultColor = DEFAULT_ACCENT_COLOR }:
   const setAccentColor = useCallback((color: string) => {
     setAccentColorState(color);
     saveAccentColor(color);
+    // Update recent colors
+    const updated = addToRecentColors(color);
+    setRecentColors(updated);
   }, []);
   
   const resetToDefault = useCallback(() => {
@@ -268,12 +349,19 @@ export function ThemeProvider({ children, defaultColor = DEFAULT_ACCENT_COLOR }:
     clearAccentColor();
   }, [defaultColor]);
   
+  const handleClearRecentColors = useCallback(() => {
+    clearRecentColors();
+    setRecentColors([]);
+  }, []);
+  
   const themeColors = getThemeColors(accentColor);
   
   const value: ThemeContextValue = {
     accentColor,
     setAccentColor,
     resetToDefault,
+    recentColors,
+    clearRecentColors: handleClearRecentColors,
     themeColors,
   };
   

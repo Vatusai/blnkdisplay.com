@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { navigationConfig, navigationConfigEs } from '../config';
 import type { Lang } from '../LangContext';
@@ -80,6 +81,14 @@ const Navigation = ({ lang, onToggleLang }: NavigationProps) => {
                 {c.ctaText}
               </a>
             )}
+
+            {/* Admin access — discrete utility link, not a public CTA */}
+            <Link
+              to="/admin/login"
+              className="font-body text-[10px] uppercase tracking-widest text-white/25 hover:text-white/60 transition-colors duration-300"
+            >
+              Admin
+            </Link>
           </div>
 
           {/* Mobile menu button */}
@@ -144,6 +153,19 @@ const Navigation = ({ lang, onToggleLang }: NavigationProps) => {
               {c.ctaText}
             </a>
           )}
+
+          {/* Admin access — discrete utility link */}
+          <Link
+            to="/admin/login"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="font-body text-xs uppercase tracking-widest text-white/25 hover:text-white/50 transition-colors duration-300"
+            style={{
+              transitionDelay: isMobileMenuOpen ? `${(c.navLinks.length + 2) * 100}ms` : '0ms',
+              opacity: isMobileMenuOpen ? 1 : 0,
+            }}
+          >
+            Admin
+          </Link>
         </div>
       </div>
     </>

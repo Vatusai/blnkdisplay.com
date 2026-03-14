@@ -3,12 +3,16 @@
  * 
  * Located at: /admin/settings/theme
  * 
- * Allows administrators to customize the website's accent color theme.
- * Changes are applied immediately and persisted to localStorage.
- * Now integrated within the AdminLayout.
+ * Features:
+ * - Full color picker with react-colorful
+ * - Recent colors history (last 4)
+ * - Preset themes
+ * - Live preview
+ * - Persistent storage
  */
 
 import { useState, useCallback, useEffect } from 'react';
+import { HexColorPicker } from 'react-colorful';
 import { 
   useTheme, 
   COLOR_PRESETS, 
@@ -24,26 +28,243 @@ import {
   Type,
   MousePointerClick,
   Square,
-  Info
+  Info,
+  History,
+  X
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
-
 import { toast } from 'sonner';
 
 // =============================================================================
-// PRESET COLOR SWATCH COMPONENT
+// COLOR SWATCH COMPONENT (for presets and recent colors)
 // =============================================================================
 
 interface ColorSwatchProps {
+  color: string;
+  label?: string;
+  isSelected: boolean;
+  onClick: () => void;
+  showRemove?: boolean;
+  onRemove?: () => void;
+}
+
+function ColorSwatch({ color, label, isSelected, onClick, showRemove, onRemove }: ColorSwatchProps) {
+  return (
+    <button
+      onClick={onClick}
+      className={`
+        group relative flex flex-col items-center gap-2 p-3 rounded-lg
+        border-2 transition-all duration-200
+        ${isSelected 
+          ? 'border-[var(--accent)] bg-[var(--accent)]/10' 
+          : 'border-zinc-800 bg-zinc-900/50 hover:border-zinc-700 hover:bg-zinc-800'
+        }
+      `}
+      title={label || color}
+    >
+      {/* Color circle */}
+      <div
+        className="w-12 h-12 rounded-full shadow-lg transition-transform duration-200 group-hover:scale-110 relative"
+        style={{ 
+          backgroundColor: color,
+          boxShadow: `0 0 20px ${color}40`
+        }}
+      >
+        {isSelected && (
+          <div className="w-full h-full rounded-full flex items-center justify-center bg-black/30">
+            <Check className="w-5 h-5 text-white" strokeWidth={3} />
+          </div>
+        )}
+        
+        {/* Remove button for recent colors */}
+        {showRemove && onRemove && (
+          <div 
+            className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-zinc-700 
+                       flex items-center justify-center opacity-0 group-hover:opacity-100
+                       transition-opacity cursor-pointer hover:bg-rose-500"
+            onClick={(e) => {
+              e.stopPropagation();
+              onRemove();
+            }}
+          >
+            <X className="w-3 h-3 text-white" />
+          </div>
+        )}
+      </div>
+      
+      {/* Label */}
+      {label && (
+        <span className={`
+          text-xs font-medium transition-colors
+          ${isSelected ? 'text-[var(--accent)]' : 'text-zinc-400 group-hover:text-zinc-300'}
+        `}>
+          {label}
+        </span>
+      )}
+    </button>
+  );
+}
+
+// =============================================================================
+// RECENT COLORS COMPONENT
+// =============================================================================
+
+interface RecentColorsProps {
+  colors: string[];
+  currentColor: string;
+  onSelect: (color: string) => void;
+  onClear: () => void;
+}
+
+function RecentColors({ colors, currentColor, onSelect, onClear }: RecentColorsProps) {
+  if (colors.length === 0) return null;
+
+  return (
+    <div className="space-y-3">
+      <div className="flex items-center justify-between">
+        <Label className="flex items-center gap-2">
+          <History className="w-4 h-4 text-zinc-500" />
+          Recent Colors
+        </Label>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={onClear}
+          className="h-auto py-1 px-2 text-xs text-zinc-500 hover:text-rose-400"
+        >
+          Clear
+        </Button>
+      </div>
+      <div className="flex flex-wrap gap-3">
+        {colors.map((color) => (
+          <ColorSwatch
+            key={color}
+            color={color}
+            isSelected={color.toLowerCase() === currentColor.toLowerCase()}
+            onClick={() => onSelect(color)}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// =============================================================================
+// FULL COLOR PICKER COMPONENT
+// =============================================================================
+
+interface FullColorPickerProps {
+  value: string;
+  onChange: (color: string) => void;
+}
+
+function FullColorPicker({ value, onChange }: FullColorPickerProps) {
+  const [inputValue, setInputValue] = useState(value);
+  
+  // Sync input with external value
+  useEffect(() => {
+    setInputValue(value);
+  }, [value]);
+  
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value;
+    setInputValue(newValue);
+    
+    // Update picker if valid hex
+    if (/^#[0-9A-Fa-f]{6}$/.test(newValue)) {
+      onChange(newValue);
+    }
+  };
+
+  return (
+    <div className="space-y-4">
+      {/* react-colorful picker */}
+      <div className="flex flex-col sm:flex-row gap-4">
+        <div className="custom-color-picker">
+          <HexColorPicker 
+            color={value} 
+            onChange={onChange}
+            style={{ width: '100%', height: '200px' }}
+          />
+        </div>
+        
+        {/* Color preview and input */}
+        <div className="flex-1 space-y-3">
+          {/* Large preview */}
+          <div 
+            className="w-full h-20 rounded-lg border-2 border-zinc-700 shadow-lg transition-colors duration-200"
+            style={{ 
+              backgroundColor: value,
+              boxShadow: `0 0 30px ${value}30`
+            }}
+          />
+          
+          {/* Hex input */}
+          <div className="space-y-1">
+            <Label className="text-xs text-zinc-500">HEX Color</Label>
+            <div className="flex gap-2">
+              <input
+                type="text"
+                value={inputValue}
+                onChange={handleInputChange}
+                placeholder="#0D9488"
+                className="flex-1 px-3 py-2 bg-zinc-950 border border-zinc-800 rounded-lg 
+                           text-white font-mono text-sm uppercase
+                           focus:outline-none focus:border-[var(--accent)] transition-colors"
+                maxLength={7}
+              />
+              <input
+                type="color"
+                value={value}
+                onChange={(e) => onChange(e.target.value)}
+                className="w-10 h-10 p-0 border-0 rounded-lg cursor-pointer bg-transparent"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      {/* Custom styles for react-colorful */}
+      <style>{`
+        .custom-color-picker .react-colorful {
+          width: 100%;
+          height: 200px;
+          border-radius: 8px;
+          overflow: hidden;
+          box-shadow: 0 0 20px rgba(0,0,0,0.3);
+        }
+        .custom-color-picker .react-colorful__saturation {
+          border-radius: 8px 8px 0 0;
+        }
+        .custom-color-picker .react-colorful__hue {
+          height: 24px;
+          border-radius: 0 0 8px 8px;
+        }
+        .custom-color-picker .react-colorful__pointer {
+          width: 20px;
+          height: 20px;
+          border: 2px solid white;
+          box-shadow: 0 0 0 1px rgba(0,0,0,0.3);
+        }
+      `}</style>
+    </div>
+  );
+}
+
+// =============================================================================
+// PRESET SWATCH COMPONENT
+// =============================================================================
+
+interface PresetSwatchProps {
   preset: ColorPreset;
   isSelected: boolean;
   onClick: () => void;
 }
 
-function ColorSwatch({ preset, isSelected, onClick }: ColorSwatchProps) {
+function PresetSwatch({ preset, isSelected, onClick }: PresetSwatchProps) {
   return (
     <button
       onClick={onClick}
@@ -84,7 +305,7 @@ function ColorSwatch({ preset, isSelected, onClick }: ColorSwatchProps) {
 }
 
 // =============================================================================
-// PREVIEW COMPONENTS
+// THEME PREVIEW COMPONENT
 // =============================================================================
 
 function ThemePreview() {
@@ -190,79 +411,26 @@ function ThemePreview() {
 }
 
 // =============================================================================
-// CUSTOM COLOR PICKER
-// =============================================================================
-
-interface CustomColorPickerProps {
-  value: string;
-  onChange: (color: string) => void;
-}
-
-function CustomColorPicker({ value, onChange }: CustomColorPickerProps) {
-  const [inputValue, setInputValue] = useState(value);
-  
-  // Update input when external value changes
-  useEffect(() => {
-    setInputValue(value);
-  }, [value]);
-  
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = e.target.value;
-    setInputValue(newValue);
-    
-    // Only update if it's a valid hex color
-    if (/^#[0-9A-Fa-f]{6}$/.test(newValue)) {
-      onChange(newValue);
-    }
-  };
-  
-  return (
-    <div className="flex items-center gap-3">
-      {/* Native color picker */}
-      <div className="relative">
-        <input
-          type="color"
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          className="w-12 h-12 rounded-lg cursor-pointer border-0 p-0 overflow-hidden"
-          style={{
-            background: 'transparent',
-          }}
-        />
-        <div 
-          className="absolute inset-0 rounded-lg pointer-events-none border-2 border-zinc-700"
-          style={{ backgroundColor: value }}
-        />
-      </div>
-      
-      {/* Hex input */}
-      <div className="flex-1">
-        <input
-          type="text"
-          value={inputValue}
-          onChange={handleInputChange}
-          placeholder="#0D9488"
-          className="w-full px-3 py-2 bg-zinc-900 border border-zinc-800 rounded-lg text-white font-mono text-sm focus:outline-none focus:border-[var(--accent)] transition-colors"
-          maxLength={7}
-        />
-      </div>
-    </div>
-  );
-}
-
-// =============================================================================
 // MAIN PAGE COMPONENT
 // =============================================================================
 
 export default function ThemeSettings() {
-  const { accentColor, setAccentColor, resetToDefault, themeColors } = useTheme();
-  const [customColor, setCustomColor] = useState(accentColor);
+  const { 
+    accentColor, 
+    setAccentColor, 
+    resetToDefault, 
+    themeColors,
+    recentColors,
+    clearRecentColors
+  } = useTheme();
   
-  // Update custom color when accent color changes externally
-  useEffect(() => {
-    setCustomColor(accentColor);
-  }, [accentColor]);
+  // Check if current color matches a preset
+  const selectedPreset = COLOR_PRESETS.find(
+    p => p.value.toLowerCase() === accentColor.toLowerCase()
+  );
   
+  const isCustomColor = !selectedPreset;
+
   const handlePresetSelect = useCallback((preset: ColorPreset) => {
     setAccentColor(preset.value);
     toast.success(`Theme changed to ${preset.name}`, {
@@ -270,7 +438,7 @@ export default function ThemeSettings() {
     });
   }, [setAccentColor]);
   
-  const handleCustomColorChange = useCallback((color: string) => {
+  const handleColorChange = useCallback((color: string) => {
     setAccentColor(color);
   }, [setAccentColor]);
   
@@ -280,13 +448,6 @@ export default function ThemeSettings() {
       description: `Accent color restored to ${DEFAULT_ACCENT_COLOR}`,
     });
   }, [resetToDefault]);
-  
-  // Check if current color matches a preset
-  const selectedPreset = COLOR_PRESETS.find(
-    p => p.value.toLowerCase() === accentColor.toLowerCase()
-  );
-  
-  const isCustomColor = !selectedPreset;
 
   return (
     <div>
@@ -298,39 +459,47 @@ export default function ThemeSettings() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left Column - Color Selection */}
         <div className="lg:col-span-2 space-y-6">
-          {/* Accent Color Section */}
+          
+          {/* Full Color Picker Section */}
           <Card className="border-zinc-800/50 bg-zinc-900/20">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Palette className="w-5 h-5 text-[var(--accent)]" />
                 Accent Color
                 <span 
-                  className="w-4 h-4 rounded-full ml-auto"
+                  className="w-4 h-4 rounded-full ml-auto ring-2 ring-zinc-700"
                   style={{ backgroundColor: accentColor }}
                 />
               </CardTitle>
               <CardDescription>
-                Choose a custom color or select from presets below
+                Choose any color using the picker below
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              {/* Custom Color Picker */}
-              <div className="space-y-3">
-                <Label htmlFor="custom-color">Custom Color</Label>
-                <CustomColorPicker 
-                  value={customColor}
-                  onChange={handleCustomColorChange}
-                />
-              </div>
+              {/* Full Color Picker */}
+              <FullColorPicker 
+                value={accentColor}
+                onChange={handleColorChange}
+              />
 
               <Separator className="bg-zinc-800" />
+
+              {/* Recent Colors */}
+              <RecentColors
+                colors={recentColors}
+                currentColor={accentColor}
+                onSelect={handleColorChange}
+                onClear={clearRecentColors}
+              />
+
+              {recentColors.length > 0 && <Separator className="bg-zinc-800" />}
 
               {/* Preset Themes */}
               <div className="space-y-3">
                 <Label>Preset Themes</Label>
                 <div className="grid grid-cols-5 gap-3">
                   {COLOR_PRESETS.map((preset) => (
-                    <ColorSwatch
+                    <PresetSwatch
                       key={preset.value}
                       preset={preset}
                       isSelected={
@@ -358,7 +527,7 @@ export default function ThemeSettings() {
                       title="Dark variant"
                     />
                     <div 
-                      className="w-10 h-10 rounded-lg border border-zinc-700"
+                      className="w-10 h-10 rounded-lg border border-zinc-700 ring-2 ring-[var(--accent)]"
                       style={{ backgroundColor: themeColors.accent }}
                       title="Main accent"
                     />
@@ -398,6 +567,10 @@ export default function ThemeSettings() {
                 <li className="flex items-start gap-2">
                   <span className="text-[var(--accent)]">•</span>
                   <span>Theme color is stored in browser localStorage</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-[var(--accent)]">•</span>
+                  <span>Recent colors history is also persisted locally</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-[var(--accent)]">•</span>

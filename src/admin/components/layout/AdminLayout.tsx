@@ -9,8 +9,9 @@
  * - Visual hierarchy aligned with BLNK Display brand
  */
 
-import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useDemoAuth } from '../../lib/demo-auth';
 import {
   LayoutDashboard,
   Palette,
@@ -199,6 +200,13 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  const { logout } = useDemoAuth();
+
+  // Close mobile menu on any route change
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [location.pathname]);
 
   // Check if current path matches nav item
   const isPathActive = (path: string) => {
@@ -326,13 +334,19 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Link to="/">
-                      <Button variant="ghost" size="icon" className="h-8 w-8 text-zinc-500 hover:text-zinc-300">
-                        <LogOut className="w-4 h-4" />
-                      </Button>
-                    </Link>
+                    <Button 
+                      variant="ghost" 
+                      size="icon" 
+                      className="h-8 w-8 text-zinc-500 hover:text-rose-400 hover:bg-rose-500/10"
+                      onClick={() => {
+                        logout();
+                        navigate('/admin/login');
+                      }}
+                    >
+                      <LogOut className="w-4 h-4" />
+                    </Button>
                   </TooltipTrigger>
-                  <TooltipContent>Exit to Website</TooltipContent>
+                  <TooltipContent>Logout</TooltipContent>
                 </Tooltip>
               </TooltipProvider>
             </div>
@@ -340,15 +354,21 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Link to="/">
-                    <Avatar className="w-10 h-10 border border-zinc-800 cursor-pointer hover:border-[var(--accent)]/50 transition-colors">
+                  <button 
+                    onClick={() => {
+                      logout();
+                      navigate('/admin/login');
+                    }}
+                    className="block"
+                  >
+                    <Avatar className="w-10 h-10 border border-zinc-800 cursor-pointer hover:border-rose-500/50 transition-colors">
                       <AvatarFallback className="bg-zinc-800 text-zinc-400 text-xs">
                         RO
                       </AvatarFallback>
                     </Avatar>
-                  </Link>
+                  </button>
                 </TooltipTrigger>
-                <TooltipContent side="right">Rodrigo - Exit to Website</TooltipContent>
+                <TooltipContent side="right">Logout</TooltipContent>
               </Tooltip>
             </TooltipProvider>
           )}
