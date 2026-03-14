@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Start the Vite development server
+cd "$(dirname "$0")/.." || exit 1
+npm run dev

@@ -117,7 +117,7 @@ const ColorPalette = () => {
       {/* Grid lines */}
       <div className="absolute inset-0 pointer-events-none">
         {/* Horizontal lines */}
-        {[0, 33.33, 66.66, 100].map((pos, i) => (
+        {[33.33, 66.66].map((pos, i) => (
           <div
             key={`h-${i}`}
             className="grid-line-h absolute left-0 right-0 h-px bg-white/10 origin-left"
@@ -125,7 +125,7 @@ const ColorPalette = () => {
           />
         ))}
         {/* Vertical lines */}
-        {[0, 25, 50, 75, 100].map((pos, i) => (
+        {[25, 50, 75].map((pos, i) => (
           <div
             key={`v-${i}`}
             className="grid-line-v absolute top-0 bottom-0 w-px bg-white/10 origin-top"
@@ -156,7 +156,7 @@ const ColorPalette = () => {
         {/* Color grid */}
         <div
           ref={gridRef}
-          className="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/10 border-4 border-black"
+          className="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/10"
         >
           {c.colors.map((swatch, index) => (
             <div

@@ -17,6 +17,7 @@ const Hero = () => {
   const gridRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [overlayMounted, setOverlayMounted] = useState(true);
   const triggersRef = useRef<ScrollTrigger[]>([]);
 
   useEffect(() => {
@@ -32,8 +33,23 @@ const Hero = () => {
     const cells = grid.querySelectorAll('.grid-cell');
     const titleBlocks = title.querySelectorAll('.title-block');
 
-    // Initial entrance animation
-    const tl = gsap.timeline({ delay: 0.3 });
+    // Initial entrance animation — tears down 3D context on complete to eliminate
+    // the GPU compositing layer boundary that leaves a 1px seam at the grid edges
+    const tl = gsap.timeline({
+      delay: 0.3,
+      onComplete: () => {
+        // Remove perspective/preserve-3d: cells are now at rotateX:0 (flat),
+        // so 3D context is no longer needed. Removing it collapses the GPU
+        // compositing layer and eliminates the compositing boundary seam.
+        if (grid) {
+          grid.style.perspective = '';
+          grid.style.transformStyle = '';
+        }
+        // Clear GSAP inline transforms/opacity from cells — leaves them as
+        // ordinary absolute divs with no GPU layer promotion.
+        gsap.set(cells, { clearProps: 'transform,opacity' });
+      },
+    });
 
     // Grid cells flip in with stagger
     tl.fromTo(
@@ -127,14 +143,17 @@ const Hero = () => {
         cells.push(
           <div
             key={cellIndex}
-            className={`grid-cell absolute preserve-3d backface-hidden transition-all duration-300 hover:scale-105 hover:z-10 ${
+            className={`grid-cell absolute transition-transform duration-300 hover:scale-105 hover:z-10 ${
               isPink ? 'bg-pink' : ''
             }`}
             style={{
               left: `${(col / cols) * 100}%`,
               top: `${(row / rows) * 100}%`,
-              width: `${100 / cols}%`,
-              height: `${100 / rows}%`,
+              // +1px only on non-edge cells: bridges the subpixel gap to the
+              // right/bottom neighbour. Edge cells have no neighbour so no
+              // bleed — prevents the overflow-hidden hard-clip boundary artifact.
+              width: col < cols - 1 ? `calc(${100 / cols}% + 1px)` : `${100 / cols}%`,
+              height: row < rows - 1 ? `calc(${100 / rows}% + 1px)` : `${100 / rows}%`,
               backgroundImage: isPink ? 'none' : bgImage ? `url(${bgImage})` : 'none',
               backgroundPosition: `${(col / (cols - 1)) * 100}% ${(row / (rows - 1)) * 100}%`,
               backgroundSize: `${cols * 100}% ${rows * 100}%`,
@@ -152,13 +171,13 @@ const Hero = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen w-full bg-black overflow-hidden perspective-1000"
+      className="relative min-h-screen w-full bg-black overflow-hidden"
     >
-      {/* Grid container */}
+      {/* Grid container — perspective + preserve-3d kept here only, not on individual cells */}
       <div
         ref={gridRef}
-        className="absolute inset-0 preserve-3d"
-        style={{ transformStyle: 'preserve-3d' }}
+        className="absolute inset-0"
+        style={{ perspective: '1000px', transformStyle: 'preserve-3d' }}
       >
         {generateGridCells()}
       </div>
@@ -220,12 +239,15 @@ const Hero = () => {
       <div className="absolute top-24 left-6 w-16 h-16 border-l-2 border-t-2 border-pink/30 z-20" />
       <div className="absolute bottom-24 right-6 w-16 h-16 border-r-2 border-b-2 border-pink/30 z-20" />
 
-      {/* Loading overlay */}
-      <div
-        className={`absolute inset-0 bg-black z-50 transition-opacity duration-700 pointer-events-none ${
-          isLoaded ? 'opacity-0' : 'opacity-100'
-        }`}
-      />
+      {/* Loading overlay — unmounted from DOM after fade so it leaves no compositing layer */}
+      {overlayMounted && (
+        <div
+          className={`absolute inset-0 bg-black z-50 transition-opacity duration-700 pointer-events-none ${
+            isLoaded ? 'opacity-0' : 'opacity-100'
+          }`}
+          onTransitionEnd={() => { if (isLoaded) setOverlayMounted(false); }}
+        />
+      )}
     </section>
   );
 };

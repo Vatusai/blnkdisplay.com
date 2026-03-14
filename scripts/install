@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Install / reinstall all dependencies
+cd "$(dirname "$0")/.." || exit 1
+npm install

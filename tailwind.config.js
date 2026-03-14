@@ -11,9 +11,15 @@ module.exports = {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         pink: {
-          DEFAULT: "#00F0FF",
-          dark: "#00C4D1",
-          light: "#5DFFFF",
+          DEFAULT: "var(--pink, #0D9488)",
+          dark: "var(--accent-dark, #0F766E)",
+          light: "var(--accent-light, #2DD4BF)",
+        },
+        accent: {
+          DEFAULT: "var(--accent, #0D9488)",
+          dark: "var(--accent-dark, #0F766E)",
+          light: "var(--accent-light, #2DD4BF)",
+          foreground: "hsl(var(--accent-foreground))",
         },
         primary: {
           DEFAULT: "hsl(var(--primary))",
@@ -57,8 +63,10 @@ module.exports = {
       },
       boxShadow: {
         xs: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
-        pink: "0 0 40px rgba(255, 115, 195, 0.4)",
-        "pink-lg": "0 0 60px rgba(255, 115, 195, 0.6)",
+        pink: "0 0 40px color-mix(in srgb, var(--accent, #0D9488) 40%, transparent)",
+        "pink-lg": "0 0 60px color-mix(in srgb, var(--accent, #0D9488) 60%, transparent)",
+        accent: "0 0 40px color-mix(in srgb, var(--accent, #0D9488) 40%, transparent)",
+        "accent-lg": "0 0 60px color-mix(in srgb, var(--accent, #0D9488) 60%, transparent)",
       },
       keyframes: {
         "accordion-down": {

@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Run ESLint across the project
+cd "$(dirname "$0")/.." || exit 1
+npm run lint

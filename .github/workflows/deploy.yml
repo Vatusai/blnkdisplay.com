@@ -32,10 +32,10 @@ jobs:
       
       - name: Build
         run: npm run build
-      
-      - name: Add CNAME to dist
-        run: echo "blnkdisplay.com" > dist/CNAME
-      
+        # Note: public/CNAME, public/404.html, and public/.nojekyll are
+        # automatically copied to dist/ by Vite during the build step above.
+        # No manual copy steps are needed.
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
       

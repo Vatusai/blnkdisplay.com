@@ -149,7 +149,10 @@ const Specs = () => {
                 </div>
 
                 {/* Hover glow */}
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none shadow-[0_0_30px_rgba(255,45,143,0.15)]" />
+                <div 
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                  style={{ boxShadow: '0 0 30px color-mix(in srgb, var(--accent) 15%, transparent)' }}
+                />
               </div>
             ))}
           </div>

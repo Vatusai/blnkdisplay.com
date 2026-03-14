@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>BLNK Display</title>
+
+  <!--
+    GitHub Pages SPA Routing — 404 redirect workaround
+    Source: https://github.com/rafgraph/spa-github-pages (MIT)
+
+    GitHub Pages cannot rewrite arbitrary paths to index.html (no server-side
+    try_files). When a user navigates directly to a SPA route like /admin or
+    refreshes on /admin/settings/theme, GitHub Pages has no file at that path
+    and serves this 404.html instead.
+
+    This script encodes the intended path into a query string and redirects to
+    the site root so that index.html is served. The restoration script inside
+    index.html then reads the encoded path back and calls history.replaceState
+    to restore the correct URL before React/BrowserRouter initialises.
+
+    pathSegmentsToKeep = 0  →  correct for a custom domain at the root
+                               (blnkdisplay.com).
+    pathSegmentsToKeep = 1  →  use this for github.io/<repo> project pages
+                               without a custom domain.
+  -->
+
+  <!-- Prevent search engines from indexing the mangled redirect URL -->
+  <meta name="robots" content="noindex">
+
+  <script>
+    var pathSegmentsToKeep = 0;
+    var l = window.location;
+    l.replace(
+      l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+      l.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/') + '/?/' +
+      l.pathname.slice(1).split('/').slice(pathSegmentsToKeep).join('/').replace(/&/g, '~and~') +
+      (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+      l.hash
+    );
+  </script>
+</head>
+<body></body>
+</html>

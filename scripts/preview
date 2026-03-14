@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Preview the production build locally (run ./build first)
+cd "$(dirname "$0")/.." || exit 1
+npm run preview

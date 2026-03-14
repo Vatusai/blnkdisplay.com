@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# Remove build output and node_modules, then reinstall
+cd "$(dirname "$0")/.." || exit 1
+
+echo "Removing dist/ ..."
+rm -rf dist
+
+echo "Removing node_modules/ ..."
+rm -rf node_modules
+
+echo "Reinstalling dependencies ..."
+npm install
+
+echo "Clean done."
