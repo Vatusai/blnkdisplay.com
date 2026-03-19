@@ -3,7 +3,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { applicationsConfig, applicationsConfigEs } from '../config';
 import { useLang } from '../LangContext';
-import { ArrowUpRight } from 'lucide-react';
+
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -131,13 +131,9 @@ const Applications = () => {
                   <h3 className="font-display font-bold text-xl md:text-2xl text-white mb-2">
                     {app.title}
                   </h3>
-                  <p className="font-body text-sm text-white/70 mb-4 max-w-md">
+                  <p className="font-body text-sm text-white/70 max-w-md">
                     {app.description}
                   </p>
-                  <div className="flex items-center gap-2 text-pink opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <span className="font-body text-sm uppercase tracking-wider">{c.learnMoreText}</span>
-                    <ArrowUpRight className="w-4 h-4" />
-                  </div>
                 </div>
               </div>
 

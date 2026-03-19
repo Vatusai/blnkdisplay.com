@@ -153,7 +153,7 @@ const Contact = () => {
 
             {/* Contact info */}
             <div className="space-y-6">
-              <div className="reveal-text flex items-center gap-4 group" data-cursor-hover>
+              <a href={`mailto:${c.email}`} className="reveal-text flex items-center gap-4 group" data-cursor-hover>
                 <div className="w-12 h-12 border border-white/20 flex items-center justify-center transition-colors duration-300 group-hover:border-pink group-hover:bg-pink/10">
                   <Mail className="w-5 h-5 text-pink" />
                 </div>
@@ -163,9 +163,9 @@ const Contact = () => {
                     {c.email}
                   </span>
                 </div>
-              </div>
+              </a>
 
-              <div className="reveal-text flex items-center gap-4 group" data-cursor-hover>
+              <a href={`tel:${c.phone.replace(/\s/g, '')}`} className="reveal-text flex items-center gap-4 group" data-cursor-hover>
                 <div className="w-12 h-12 border border-white/20 flex items-center justify-center transition-colors duration-300 group-hover:border-pink group-hover:bg-pink/10">
                   <Phone className="w-5 h-5 text-pink" />
                 </div>
@@ -175,7 +175,7 @@ const Contact = () => {
                     {c.phone}
                   </span>
                 </div>
-              </div>
+              </a>
 
               <div className="reveal-text flex items-center gap-4 group" data-cursor-hover>
                 <div className="w-12 h-12 border border-white/20 flex items-center justify-center transition-colors duration-300 group-hover:border-pink group-hover:bg-pink/10">

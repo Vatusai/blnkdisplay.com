@@ -1,11 +1,9 @@
-import { Instagram, Twitter, Youtube, Mail, MapPin, Phone } from 'lucide-react';
+import { Instagram, Mail, MapPin, Phone } from 'lucide-react';
 import { footerConfig, footerConfigEs } from '../config';
 import { useLang } from '../LangContext';
 
 const socialIconMap = {
   instagram: Instagram,
-  twitter: Twitter,
-  youtube: Youtube,
 };
 
 const Footer = () => {
@@ -71,13 +69,9 @@ const Footer = () => {
               <ul className="space-y-3">
                 {section.links.map((link) => (
                   <li key={link}>
-                    <a
-                      href="#"
-                      className="font-body text-white/50 text-sm hover:text-pink transition-colors duration-300"
-                      data-cursor-hover
-                    >
+                    <span className="font-body text-white/50 text-sm">
                       {link}
-                    </a>
+                    </span>
                   </li>
                 ))}
               </ul>

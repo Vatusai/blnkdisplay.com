@@ -29,7 +29,6 @@ import {
   Lock, 
   User, 
   ArrowRight, 
-  Sparkles,
   AlertCircle,
   Eye,
   EyeOff,
@@ -234,35 +233,13 @@ export default function Login() {
                 </Button>
               </form>
 
-              {/* Demo Notice */}
-              <div className="mt-6 p-3 rounded-lg bg-[var(--accent)]/5 border border-[var(--accent)]/10">
-                <div className="flex items-start gap-2">
-                  <Sparkles className="w-4 h-4 text-[var(--accent)] flex-shrink-0 mt-0.5" />
-                  <div>
-                    <p className="text-xs font-medium text-[var(--accent)] mb-1">
-                      Demo Mode Active
-                    </p>
-                    <p className="text-xs text-zinc-500">
-                      This is a temporary authentication system for demonstration. 
-                      Will be replaced with Supabase Auth.
-                    </p>
-                  </div>
-                </div>
-              </div>
 
-              {/* Demo Credentials (for demo purposes only) */}
-              <div className="mt-4 text-center">
-                <p className="text-xs text-zinc-600">
-                  Demo credentials: <span className="text-zinc-500">admin / admin@blnkdisplay123</span>
-                </p>
-              </div>
             </CardContent>
           </Card>
 
           {/* Footer */}
           <p className="text-center mt-8 text-xs text-zinc-600">
-            Protected by demo authentication.{' '}
-            <span className="text-zinc-500">Not for production use.</span>
+            BLNK Display Admin Panel
           </p>
         </div>
       </div>

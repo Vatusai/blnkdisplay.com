@@ -497,7 +497,7 @@ export default function ThemeSettings() {
               {/* Preset Themes */}
               <div className="space-y-3">
                 <Label>Preset Themes</Label>
-                <div className="grid grid-cols-5 gap-3">
+                <div className="grid grid-cols-4 gap-3">
                   {COLOR_PRESETS.map((preset) => (
                     <PresetSwatch
                       key={preset.value}
@@ -582,7 +582,7 @@ export default function ThemeSettings() {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-[var(--accent)]">•</span>
-                  <span>Default color: {DEFAULT_ACCENT_COLOR} (Teal)</span>
+                  <span>Default color: {DEFAULT_ACCENT_COLOR} (Cyan)</span>
                 </li>
               </ul>
             </CardContent>

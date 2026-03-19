@@ -12,26 +12,26 @@
     --card-foreground: 0 0% 100%;
     --popover: 0 0% 5%;
     --popover-foreground: 0 0% 100%;
-    --primary: 174 76% 31%;
+    --primary: 186 100% 50%;
     --primary-foreground: 0 0% 100%;
     --secondary: 0 0% 10%;
     --secondary-foreground: 0 0% 100%;
     --muted: 0 0% 15%;
     --muted-foreground: 0 0% 60%;
-    --accent: 174 76% 31%;
+    --accent: 186 100% 50%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
     --border: 0 0% 20%;
     --input: 0 0% 20%;
-    --ring: 174 76% 31%;
+    --ring: 186 100% 50%;
     --radius: 0rem;
-    
+
     /* Accent Color System - These are dynamically controlled by the theme system */
-    --pink: #0D9488;
-    --accent: #0D9488;
-    --accent-dark: #0F766E;
-    --accent-light: #2DD4BF;
+    --pink: #00E5FF;
+    --accent: #00E5FF;
+    --accent-dark: #00B8CC;
+    --accent-light: #80F2FF;
     
     /* Base colors */
     --black: #000000;

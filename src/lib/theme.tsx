@@ -15,7 +15,7 @@ export const THEME_STORAGE_KEY = 'blnk-accent-color';
 export const RECENT_COLORS_KEY = 'blnk-recent-colors';
 export const MAX_RECENT_COLORS = 4;
 
-export const DEFAULT_ACCENT_COLOR = '#0D9488';
+export const DEFAULT_ACCENT_COLOR = '#00E5FF';
 
 export interface ColorPreset {
   name: string;
@@ -27,39 +27,32 @@ export interface ColorPreset {
 
 export const COLOR_PRESETS: ColorPreset[] = [
   {
-    name: 'Teal',
-    value: '#0D9488',
-    valueDark: '#0F766E',
-    valueLight: '#2DD4BF',
-    hsl: '174 76% 31%',
+    name: 'Cyan',
+    value: '#00E5FF',
+    valueDark: '#00B8CC',
+    valueLight: '#80F2FF',
+    hsl: '186 100% 50%',
   },
   {
-    name: 'Deep Blue',
-    value: '#2563EB',
-    valueDark: '#1D4ED8',
-    valueLight: '#60A5FA',
-    hsl: '221 83% 53%',
-  },
-  {
-    name: 'Emerald',
-    value: '#059669',
-    valueDark: '#047857',
-    valueLight: '#34D399',
-    hsl: '160 84% 39%',
+    name: 'Blue',
+    value: '#007CF0',
+    valueDark: '#005FC0',
+    valueLight: '#60AEFF',
+    hsl: '209 100% 47%',
   },
   {
     name: 'Purple',
-    value: '#7C3AED',
-    valueDark: '#6D28D9',
-    valueLight: '#A78BFA',
-    hsl: '263 70% 59%',
+    value: '#7B61FF',
+    valueDark: '#5C3FDF',
+    valueLight: '#B3A3FF',
+    hsl: '250 100% 69%',
   },
   {
-    name: 'Neutral Gray',
-    value: '#4B5563',
-    valueDark: '#374151',
-    valueLight: '#9CA3AF',
-    hsl: '217 19% 35%',
+    name: 'Green',
+    value: '#00FF88',
+    valueDark: '#00CC6D',
+    valueLight: '#66FFB3',
+    hsl: '152 100% 50%',
   },
 ];
 

@@ -11,6 +11,9 @@ export default defineConfig({
   // If that ever happens, also update pathSegmentsToKeep in public/404.html.
   base: '/',
   plugins: [react()],
+  server: {
+    port: 5174,
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

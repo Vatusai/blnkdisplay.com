@@ -24,7 +24,7 @@ export interface NavigationConfig {
 export const navigationConfig: NavigationConfig = {
   logo: "BLNK",
   logoAccent: "",
-  logoImage: "/images/logo_white.png",
+  logoImage: "/images/logo_light.png",
   navLinks: [
     { label: "Products", href: "#products" },
     { label: "Projects", href: "#projects" },
@@ -57,16 +57,11 @@ export const heroConfig: HeroConfig = {
   subtitle: "BLNK DISPLAY SYSTEM",
   ctaText: "Explore the system",
   ctaHref: "#products",
-  backgroundImage: "/images/hero_stage_blnk.jpg",
+  backgroundImage: "/images/hero_stage_blnk.webp",
   backgroundImageMobile: "/images/hero_mobile.webp",
   gridRows: 6,
   gridCols: 8,
-  pinkCells: [
-    { row: 0, col: 4 }, { row: 0, col: 5 }, { row: 0, col: 6 }, { row: 0, col: 7 },
-    { row: 1, col: 4 }, { row: 1, col: 5 }, { row: 1, col: 6 }, { row: 1, col: 7 },
-    { row: 2, col: 4 }, { row: 2, col: 5 }, { row: 2, col: 6 }, { row: 2, col: 7 },
-    { row: 3, col: 4 }, { row: 3, col: 5 }, { row: 3, col: 6 }, { row: 3, col: 7 },
-  ],
+  pinkCells: [],
 };
 
 // ----------------------------------------------------------------------------
@@ -107,8 +102,8 @@ export const productShowcaseConfig: ProductShowcaseConfig = {
     { value: "7680Hz", label: "Refresh Rate" },
   ],
   colorSwatches: ["#FF2D8F", "#00D4FF", "#FFFFFF"],
-  colorSwatchesLabel: "Available configurations",
-  ctaText: "See specs",
+  colorSwatchesLabel: "",
+  ctaText: "",
   productImage: "/images/product_led_cube.jpg",
   productImageAlt: "BLNK LED Panel Detail",
   decorativeText: "PRECISION",
@@ -123,6 +118,7 @@ export interface ColorSwatch {
   nameSecondary: string;
   color: string;
   description: string;
+  image?: string;
 }
 
 export interface ColorPaletteConfig {
@@ -139,10 +135,10 @@ export const colorPaletteConfig: ColorPaletteConfig = {
   headingMain: "Curve",
   headingAccent: "the moment.",
   colors: [
-    { name: "Concave", nameSecondary: "Inward curve", color: "#FF2D8F", description: "Immersive audience experience" },
-    { name: "Convex", nameSecondary: "Outward curve", color: "#00D4FF", description: "Maximum viewing angles" },
-    { name: "Flat", nameSecondary: "Standard", color: "#FFFFFF", description: "Classic presentation" },
-    { name: "Custom", nameSecondary: "Your vision", color: "#1A1A1A", description: "Any shape imaginable" },
+    { name: "Concave", nameSecondary: "Inward curve", color: "#FF2D8F", description: "Immersive audience experience", image: "/images/configuraciones/concava.jpeg" },
+    { name: "Convex", nameSecondary: "Outward curve", color: "#00D4FF", description: "Maximum viewing angles", image: "/images/configuraciones/convexa.jpeg" },
+    { name: "Flat", nameSecondary: "Standard", color: "#FFFFFF", description: "Classic presentation", image: "/images/configuraciones/plana.jpeg" },
+    { name: "Custom", nameSecondary: "Your vision", color: "#1A1A1A", description: "Any shape imaginable", image: "/images/configuraciones/personalizada.jpeg" },
   ],
   bottomText: "Fast rigging. Zero visible seams.",
   decorativeText: "CURVE",
@@ -171,9 +167,9 @@ export const finaleConfig: FinaleConfig = {
   headingAccent: "any canvas.",
   tagline: "Stack, hang, or floor-mount. One system—arenas, galleries, pop-ups. From intimate brand activations to stadium-scale concerts, BLNK Display transforms any space into an immersive visual experience.",
   features: ["Rapid Deployment", "Tool-Free Rigging", "24/7 Support"],
-  ctaText: "Explore layouts",
+  ctaText: "",
   ctaHref: "#contact",
-  image: "/images/finale_branded_wall.jpg",
+  image: "/images/finale_branded_wall.webp",
   imageAlt: "Modular LED System",
   decorativeText: "BUILD",
 };
@@ -194,39 +190,37 @@ export interface ApplicationsConfig {
   headingAccent: string;
   applications: Application[];
   decorativeText?: string;
-  learnMoreText: string;
 }
 
 export const applicationsConfig: ApplicationsConfig = {
   sectionLabel: "APPLICATIONS",
   headingMain: "Any event.",
   headingAccent: "Any scale.",
-  learnMoreText: "Learn more",
   applications: [
     {
       title: "Concerts & Live Shows",
       description: "Stunning visuals that amplify every performance",
-      image: "/images/app_concerts.jpg",
+      image: "/images/app_concerts.webp",
     },
     {
       title: "Corporate Events",
       description: "Professional displays for presentations and launches",
-      image: "/images/app_corporate.jpg",
+      image: "/images/app_corporate.webp",
     },
     {
       title: "Brand Activations",
       description: "Immersive experiences that captivate audiences",
-      image: "/images/app_brand_activation.jpg",
+      image: "/images/app_brand_activation.webp",
     },
     {
       title: "Outdoor & Public Spaces",
       description: "Large-scale displays for stadiums, malls, and public venues",
-      image: "/images/app_outdoor.jpg",
+      image: "/images/app_outdoor.webp",
     },
     {
       title: "Exhibitions & Trade Shows",
       description: "Curved and cylindrical LED structures that stop the floor",
-      image: "/images/app_exhibition.jpg",
+      image: "/images/app_exhibition.webp",
     },
   ],
 };
@@ -256,6 +250,7 @@ export const specsConfig: SpecsConfig = {
     { title: "Pitch", value: "2.6mm / 3.9mm / 4.8mm", description: "Pixel-perfect clarity at any viewing distance" },
     { title: "Brightness", value: "800–4500 nits", description: "From indoor venues to direct sunlight" },
     { title: "Refresh", value: "1920–7680 Hz", description: "Camera-safe, flicker-free performance" },
+    { title: "Use", value: "Indoor & Outdoor", description: "Designed for any environment" },
   ],
 };
 
@@ -354,7 +349,7 @@ export const contactConfig: ContactConfig = {
 // ----------------------------------------------------------------------------
 
 export interface SocialLink {
-  platform: "instagram" | "twitter" | "youtube";
+  platform: "instagram";
   href: string;
   label: string;
 }
@@ -391,17 +386,14 @@ export interface FooterConfig {
 export const footerConfig: FooterConfig = {
   logo: "BLNK",
   logoAccent: "",
-  logoImage: "/images/logo_white.png",
+  logoImage: "/images/logo_light.png",
   brandDescription: "Flexible LED displays that transform spaces. Advanced visual solutions for concerts, events, and immersive brand experiences.",
   socialLinks: [
-    { platform: "instagram", href: "#", label: "Instagram" },
-    { platform: "twitter", href: "#", label: "Twitter" },
-    { platform: "youtube", href: "#", label: "YouTube" },
+    { platform: "instagram", href: "https://www.instagram.com/blnkdisplay/", label: "Instagram" },
   ],
   linkSections: [
     { title: "Products", links: ["LED Panels", "Curved Systems", "Outdoor Series", "Accessories"] },
     { title: "Services", links: ["Rental", "Installation", "Support", "Training"] },
-    { title: "Company", links: ["About", "Careers", "Press", "Contact"] },
   ],
   contact: {
     address: "San Jose, Costa Rica",
@@ -455,7 +447,7 @@ export const videoConfig: VideoConfig = {
   headingAccent: "run.",
   description: "From flat walls to curved cylinders — BLNK Display systems deployed across events, retail, and exhibitions.",
   videoSrc: "/video/demo_reel.mp4",
-  posterImage: "/images/hero_stage_blnk.jpg",
+  posterImage: "/images/hero_stage_blnk.webp",
   playLabel: "Play",
   pauseLabel: "Pause",
   muteLabel: "Mute",
@@ -494,8 +486,8 @@ export const productShowcaseConfigEs: ProductShowcaseConfig = {
     { value: "4500", label: "Brillo (Nits)" },
     { value: "7680Hz", label: "Tasa de Refresco" },
   ],
-  colorSwatchesLabel: "Configuraciones disponibles",
-  ctaText: "Ver especificaciones",
+  colorSwatchesLabel: "",
+  ctaText: "",
   productImageAlt: "Detalle del panel LED BLNK",
   decorativeText: "PRECISIÓN",
 };
@@ -506,12 +498,12 @@ export const colorPaletteConfigEs: ColorPaletteConfig = {
   headingMain: "Curva",
   headingAccent: "el momento.",
   colors: [
-    { name: "Cóncava", nameSecondary: "Curva interior", color: "#FF2D8F", description: "Experiencia inmersiva para el público" },
-    { name: "Convexa", nameSecondary: "Curva exterior", color: "#00D4FF", description: "Máximos ángulos de visión" },
-    { name: "Plana", nameSecondary: "Estándar", color: "#FFFFFF", description: "Presentación clásica" },
-    { name: "Personalizada", nameSecondary: "Tu visión", color: "#1A1A1A", description: "Cualquier forma imaginable" },
+    { name: "Cóncava", nameSecondary: "Curva interior", color: "#FF2D8F", description: "Experiencia inmersiva para el público", image: "/images/configuraciones/concava.jpeg" },
+    { name: "Convexa", nameSecondary: "Curva exterior", color: "#00D4FF", description: "Máximos ángulos de visión", image: "/images/configuraciones/convexa.jpeg" },
+    { name: "Plana", nameSecondary: "Estándar", color: "#FFFFFF", description: "Presentación clásica", image: "/images/configuraciones/plana.jpeg" },
+    { name: "Personalizada", nameSecondary: "Tu visión", color: "#1A1A1A", description: "Cualquier forma imaginable", image: "/images/configuraciones/personalizada.jpeg" },
   ],
-  bottomText: "Rigging rápido. Sin costuras visibles.",
+  bottomText: "Rigging y Armado rápido. Sin demoras.",
   decorativeText: "CURVA",
 };
 
@@ -522,7 +514,7 @@ export const finaleConfigEs: FinaleConfig = {
   headingAccent: "cualquier lienzo.",
   tagline: "Apila, cuelga o monta en el suelo. Un solo sistema—arenas, galerías, pop-ups. Desde activaciones de marca íntimas hasta conciertos de escala estadio, BLNK Display transforma cualquier espacio en una experiencia visual inmersiva.",
   features: ["Despliegue Rápido", "Rigging Sin Herramientas", "Soporte 24/7"],
-  ctaText: "Explorar configuraciones",
+  ctaText: "",
   imageAlt: "Sistema LED Modular",
   decorativeText: "CONSTRUYE",
 };
@@ -532,13 +524,12 @@ export const applicationsConfigEs: ApplicationsConfig = {
   sectionLabel: "APLICACIONES",
   headingMain: "Cualquier evento.",
   headingAccent: "Cualquier escala.",
-  learnMoreText: "Ver más",
   applications: [
-    { title: "Conciertos y Shows en Vivo", description: "Visuales impactantes que amplifican cada actuación", image: "/images/app_concerts.jpg" },
-    { title: "Eventos Corporativos", description: "Pantallas profesionales para presentaciones y lanzamientos", image: "/images/app_corporate.jpg" },
-    { title: "Activaciones de Marca", description: "Experiencias inmersivas que cautivan audiencias", image: "/images/app_brand_activation.jpg" },
-    { title: "Espacios Exteriores y Públicos", description: "Pantallas de gran escala para estadios, centros comerciales y espacios públicos", image: "/images/app_outdoor.jpg" },
-    { title: "Exhibiciones y Ferias", description: "Estructuras LED curvas y cilíndricas que detienen el tráfico", image: "/images/app_exhibition.jpg" },
+    { title: "Conciertos y Shows en Vivo", description: "Visuales impactantes que amplifican cada actuación", image: "/images/app_concerts.webp" },
+    { title: "Eventos Corporativos", description: "Pantallas profesionales para presentaciones y lanzamientos", image: "/images/app_corporate.webp" },
+    { title: "Activaciones de Marca", description: "Experiencias inmersivas que cautivan audiencias", image: "/images/app_brand_activation.webp" },
+    { title: "Espacios Exteriores y Públicos", description: "Pantallas de gran escala para estadios, centros comerciales y espacios públicos", image: "/images/app_outdoor.webp" },
+    { title: "Exhibiciones y Ferias", description: "Estructuras LED curvas y cilíndricas que detienen el tráfico", image: "/images/app_exhibition.webp" },
   ],
 };
 
@@ -551,6 +542,7 @@ export const specsConfigEs: SpecsConfig = {
     { title: "Pitch", value: "2.6mm / 3.9mm / 4.8mm", description: "Claridad perfecta a cualquier distancia de visión" },
     { title: "Brillo", value: "800–4500 nits", description: "Desde espacios interiores hasta luz solar directa" },
     { title: "Refresco", value: "1920–7680 Hz", description: "Rendimiento sin parpadeo, compatible con cámara" },
+    { title: "Uso", value: "Interiores y exteriores", description: "Diseñado para cualquier ambiente" },
   ],
 };
 
@@ -587,7 +579,6 @@ export const footerConfigEs: FooterConfig = {
   linkSections: [
     { title: "Productos", links: ["Paneles LED", "Sistemas Curvos", "Serie Exterior", "Accesorios"] },
     { title: "Servicios", links: ["Alquiler", "Instalación", "Soporte", "Capacitación"] },
-    { title: "Empresa", links: ["Nosotros", "Empleos", "Prensa", "Contacto"] },
   ],
   legalLinks: [
     { label: "Política de Privacidad", href: "#" },
