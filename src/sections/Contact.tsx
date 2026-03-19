@@ -192,7 +192,9 @@ const Contact = () => {
 
             {/* Secondary CTA */}
             <div className="reveal-text mt-12">
-              <button 
+              <a
+                href="/brochure-blnk-display.pptx"
+                download="BLNK DISPLAY - Pantallas LED Modulares Curvas.pptx"
                 className="group flex items-center gap-3 text-white/60 hover:text-pink transition-colors duration-300"
                 data-cursor-hover
               >
@@ -200,7 +202,7 @@ const Contact = () => {
                 <span className="font-body text-sm uppercase tracking-wider">
                   {c.ctaSecondary}
                 </span>
-              </button>
+              </a>
             </div>
           </div>
 
