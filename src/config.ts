@@ -58,7 +58,7 @@ export const heroConfig: HeroConfig = {
   ctaText: "Explore the system",
   ctaHref: "#products",
   backgroundImage: "/images/hero_stage_blnk.webp",
-  backgroundImageMobile: "/images/hero_mobile.webp",
+  backgroundImageMobile: "/images/hero_stage_blnk.webp",
   gridRows: 6,
   gridCols: 8,
   pinkCells: [],
